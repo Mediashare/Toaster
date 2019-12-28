@@ -69,6 +69,6 @@ class SearchController extends AbstractController
                 endif;
             }
         }
-        return new JsonResponse($data);
+        return new JsonResponse($data, 200);
     }
 }
