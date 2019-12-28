@@ -52,9 +52,9 @@ class HubController extends AbstractController
             return $this->redirectToRoute('app');
         endif;
         
-        if ($request->isMethod('POST')) {
-            $hub->setName($request->request->get('name'));
-            $hub->setDescription($request->request->get('edit_hub_description'));
+        if ($request->isMethod('POST') && $request->get('name')) {
+            $hub->setName($request->get('name'));
+            $hub->setDescription($request->get('edit_hub_description'));
             $hub->setUpdateDate(new \DateTime());
             $em->persist($hub);
             $em->flush();

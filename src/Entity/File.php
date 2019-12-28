@@ -331,6 +331,15 @@ class File
         return $this;
     }
 
+    public function removeTags(): self
+    {
+        foreach ($this->getTags() as $tag) {
+            $this->removeTag($tag);
+        }
+
+        return $this;
+    }
+
     public function getHub(): ?Hub
     {
         return $this->hub;

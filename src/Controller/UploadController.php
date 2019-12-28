@@ -94,7 +94,6 @@ class UploadController extends AbstractController
     }
 
     private function getTags(string $tags) {
-        // New Hub
         $tags = (array) explode(',', $tags);
         foreach ($tags as $index => $name) {
             $tag = $this->em->getRepository(Tag::class)->findOneBy(['name' => $name], ['updateDate' => 'DESC']);

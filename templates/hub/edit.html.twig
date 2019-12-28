@@ -37,11 +37,11 @@
                         <label>Name</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="name" placeholder="Hub name" value="{{ hub.name }}" required>
+                                <input type="text" name="name" placeholder="Hub name" value="{{ hub.name }}" required="true">
                             </div>
                         </div>
                     </div>
-                    <button onclick="$('form#edit_hub').submit();" type="submit" class="ui button basic green">
+                    <button type="submit" class="ui button basic green" formnovalidate>
                         <i class="edit icon"></i>
                         Edit
                     </button>

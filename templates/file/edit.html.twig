@@ -13,7 +13,7 @@
     </h2>
 
     <div id="page">
-        <form method="POST" class="ui form  w-100" style="margin-top: 1rem;">
+        <form method="POST" id="file_edit" class="ui form w-100" style="margin-top: 1rem;" novalidate>
             <div class="ui grid">
                 <div class="ten wide column">
                     <div class="field">
@@ -42,62 +42,17 @@
                         <label>Filename</label>
                         <div class="two fields">
                             <div class="field">
-                                <input class="w-100" type="text" name="filename" placeholder="Filename" value="{{ file.filename }}" required>
+                                <input class="w-100" type="text" name="filename" placeholder="Filename" value="{{ file.filename }}" required="true">
                             </div>
                         </div>
                     </div>
                     <div class="field">
                         <label for="edit_tags_input">Tag(s)</label>
                         <div class="ui left icon input">
-                            <input onkeyup="checkInputs();" id="edit_tags_input" class="w-100" name="tags" type="text" required="true" placeholder="Tags...">
+                            <input onkeyup="checkInputs();" id="edit_tags_input" class="w-100" name="tags" type="text" required="false" placeholder="Tags...">
                             <i class="tags icon"></i>
                         </div>
                     </div>
-                    <script>
-                        // Form input tags
-                        var edit_tags = new Array();
-                        {% for tag in file.tags %}
-                            edit_tags.push({
-                                value: '{{ tag.name }}',
-                                text: '{{ tag.name }}',
-                                selected: true,
-                            });
-                        {% endfor %}
-                        $('#edit_tags_input').selectize({
-                            delimiter: ',',
-                            persist: false,
-                            create: true,
-                            options: edit_tags,
-                        });
-                        edit_tags.forEach(function(data) {
-                            $('#edit_tags_input')[0].selectize.addItem(data.value);
-                        })
-                    </script>
-                    <div class="field">
-                        <label for="edit_hubs_input">Hub(s)</label>
-                        <div class="ui left icon input">
-                            <input onkeyup="checkInputs();" id="edit_hubs_input" class="w-100" name="hubs" type="text" required="true" placeholder="Hubs...">
-                            <i class="folder icon"></i>
-                        </div>
-                    </div>
-                    <script>
-                        // Form input tags
-                        var edit_hubs = new Array();
-                            edit_hubs.push({
-                                value: '{{ file.hub.name }}',
-                                text: '{{ file.hub.name }}',
-                                selected: true,
-                            });
-                        $('#edit_hubs_input').selectize({
-                            delimiter: ',',
-                            persist: false,
-                            create: true,
-                            options: edit_hubs,
-                        });
-                        edit_hubs.forEach(function(data) {
-                            $('#edit_hubs_input')[0].selectize.addItem(data.value);
-                        })
-                    </script>
 
                     <button type="submit" class="ui button basic green">
                         <i class="edit icon"></i>
@@ -107,4 +62,25 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // Form input tags
+        var edit_tags = new Array();
+        {% for tag in file.tags %}
+            edit_tags.push({
+                value: '{{ tag.name }}',
+                text: '{{ tag.name }}',
+                selected: true,
+            });
+        {% endfor %}
+        $('#edit_tags_input').selectize({
+            delimiter: ',',
+            persist: false,
+            create: true,
+            options: edit_tags,
+        });
+        edit_tags.forEach(function(data) {
+            $('#edit_tags_input')[0].selectize.addItem(data.value);
+        })
+    </script>
 {% endblock content %}
