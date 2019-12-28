@@ -1,8 +1,4 @@
 <form method="POST" action="{{ path('app_login') }}" class="ui form">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     <div class="two fields">
         <div class="field ui input">
