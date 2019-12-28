@@ -3,12 +3,12 @@
         <div class="left floated">
             <div class="ui comments" style="margin: 0;">
                 <div class="comment">
-                    <a class="avatar" style="margin:0;width: 62px;height: 62px;">
+                    <a href="{{ path('profile', {'token': file.user.token}) }}" class="avatar" style="margin:0;width: 62px;height: 62px;">
                         <img src="https://eu.ui-avatars.com/api/?name={{ file.user.username }}" width="100%" height="100%" style="border-radius: 0px;">
                     </a>
                     <div class="content" style="padding: 1rem 1.5rem;">
                         <div class="summary">
-                            <a class="author ui black">{{ file.user.username }}</a>
+                            <a href="{{ path('profile', {'token': file.user.token}) }}" class="author ui black">{{ file.user.username }}</a>
                             <div class="date">{{ file.updateDate|ago }}</div>
                         </div>
                     </div>

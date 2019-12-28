@@ -58,16 +58,36 @@
                 </div>
             </div>
         {% else %}
-            <a href="{{ path('app_register') }}" class="item ui button">
+            <button onclick="$('#registration_form.ui.modal').modal('show');" class="item ui button">
                 <div class="ui positive right labeled icon">
                     <i class="user plus icon"></i> Registration
                 </div>
-            </a>
-            <a href="{{ path('app_login') }}" class="item ui button">
+            </button>
+            <button onclick="$('#login_form.ui.modal').modal('show');" class="item ui button">
                 <div class="ui positive right labeled icon">
                     <i class="user icon"></i> Login
                 </div>
-            </a>
+            </button>
         {% endif %}
+    </div>
+</div>
+
+<div id="login_form" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Login
+    </div>
+    <div class="content">
+        {{ render(controller('App\\Controller\\LoginController::login')) }}
+    </div>
+</div>
+
+<div id="registration_form" class="ui modal">
+    <i class="close icon"></i>
+    <div class="header">
+        Registration
+    </div>
+    <div class="content">
+        {{ render(controller('App\\Controller\\RegistrationController::register')) }}
     </div>
 </div>

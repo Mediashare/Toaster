@@ -32,12 +32,12 @@
     <div class="ui card w-100">
         <div class="ui comments" style="margin: 0;">
             <div class="comment">
-                <a class="avatar" style="margin:0;">
+                <a href="{{ path('profile', {'token': comment.user.token}) }}" class="avatar" style="margin:0;">
                     <img src="https://eu.ui-avatars.com/api/?name={{ comment.user.username }}">
                 </a>
                 <div class="content" style="padding: 0.6rem 0.6rem 0;margin-left: 2.5em;">
                     <div class="left floated">
-                        <a class="author">{{ comment.user.username }}</a>
+                        <a href="{{ path('profile', {'token': comment.user.token}) }}" class="author">{{ comment.user.username }}</a>
                         <div class="metadata">
                             <div class="date">{{ comment.updateDate|ago }}</div>
                         </div>
