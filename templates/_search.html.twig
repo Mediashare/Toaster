@@ -4,6 +4,7 @@
     </div>
     <div class="results"></div>
 </div>
+<!-- Rewrite url: http to https for prod -->
 {% set url = url("search") %}
 {% if "http://toaster.bio" in url %}
     {% set url = url|replace({'http://toaster.bio': 'https://toaster.bio' }) %}
