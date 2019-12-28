@@ -84,23 +84,23 @@ class HubController extends AbstractController
         // Create File
         $archive = new File();
         $archive->setHub($hub);
-        $archive->setFilename($hub->getSlug().'.zip');
+        $archive->setFilename($hub->getToken().'.zip');
         $archive->setMetadata(['extension' => 'zip', 'mimeType' => 'application/zip']);
             
         // Compress files
         foreach ($hub->getFiles() as $file) {
             $files[] = $file->getPath();
         }
-
         $zipper = new Zipper();
-        $zipper->make($archive->getPath());
+        $zipPath = $hub->getPath().'/'.$hub->getToken().'.zip';
+        $zipper->make($zipPath);
         $zipper->add($files);
         $zipper->close();
 
-        $response = new BinaryFileResponse($archive->getPath());
+        $response = new BinaryFileResponse($zipPath);
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $file->getFilename()
+            $hub->getToken().'.zip'
         );
         // $archive->remove();
         return $response;
