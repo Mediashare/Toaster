@@ -4,11 +4,14 @@
     </div>
     <div class="results"></div>
 </div>
-{{ dump(url("search")) }}
+{% set url = url("search") %}
+{% if "http://toaster.bio" in url %}
+    {% set url = url|replace({'http://toaster.bio': 'https://toaster.bio' }) %}
+{% endif %}
 <script>
     $('.ui.search').search({
         apiSettings: {
-            url: '{{ url("search") }}?query={query}'
+            url: '{{ url }}?query={query}'
         },
         fields: {
             results : 'results',
