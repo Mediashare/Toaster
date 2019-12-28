@@ -23,9 +23,9 @@
     </div>
     <div class="two fields">
         <div class="field">
-            <label for="stockages_input">Stockage(s)*</label>
+            <label for="hubs_input">Hub(s)*</label>
             <div class="ui left icon input">
-                <input onkeyup="checkInputs();" id="stockages_input" class="w-100" name="stockages" type="text" required="true" placeholder="Stockages...">
+                <input onkeyup="checkInputs();" id="hubs_input" class="w-100" name="hubs" type="text" required="true" placeholder="Hubs...">
                 <i class="tags icon"></i>
             </div>
         </div>
@@ -39,20 +39,20 @@
     </div>
 </form>
 <script>
-    // Form input stockages
-    var stockages = new Array();
-    {% for stockage in stockages %}
-        stockages.push({
-            value: '{{ stockage.name }}',
-            text: '{{ stockage.name }}',
+    // Form input hubs
+    var hubs = new Array();
+    {% for hub in hubs %}
+        hubs.push({
+            value: '{{ hub.name }}',
+            text: '{{ hub.name }}',
             selected: false
         });
     {% endfor %}
-    var stockages_input = $('#stockages_input').selectize({
+    var hubs_input = $('#hubs_input').selectize({
         delimiter: ',',
         persist: true,
         create: true,
-        options: stockages,
+        options: hubs,
         onChange: function (value) {
             checkInputs();
         }
@@ -88,17 +88,17 @@
             filesDescription(true);
         }
         
-        var stockages_input = $('#stockages_input').val();
-        if (!$.trim(stockages_input).length) {
+        var hubs_input = $('#hubs_input').val();
+        if (!$.trim(hubs_input).length) {
             var button = false;
         }
         
         var tags_input = $('#tags_input').val();
 
-        //if ($.trim(stockage).length > 0) {
-        //   stockageDescription(true);
+        //if ($.trim(hub).length > 0) {
+        //   hubDescription(true);
         //} else {
-        //    stockageDescription(false);    
+        //    hubDescription(false);    
         //}
         
         // Form is valid!
@@ -113,11 +113,11 @@
         }
     }
 
-    function stockageDescription(bool) {
+    function hubDescription(bool) {
         if (bool) {
-            $("div#stockageDescription").show('slow');
+            $("div#hubDescription").show('slow');
         } else {
-            $("div#stockageDescription").hide('slow');
+            $("div#hubDescription").hide('slow');
         }
     }
 

@@ -70,12 +70,16 @@ class FileController extends AbstractController
         if (!$file || $this->getUser() != $file->getUser()):
             return $this->redirectToRoute('app');
         endif;
+
+        foreach ($file->getLikes() as $like) {
+            $file->removeLike($like);
+        }
         
-        $stockage = $file->getStockage();
-        $stockage->removeFile($file);
+        $hub = $file->getHub();
+        $hub->removeFile($file);
         $em->remove($file);
         $em->flush();
 
-        return $this->redirectToRoute('stockage_show', ['token' => $stockage->getToken()]);
+        return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
     }
 }

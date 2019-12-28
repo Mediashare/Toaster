@@ -1,13 +1,13 @@
 <div class="ui card w-100">
-    <div id="clipboard_div-{{ stockage.token }}" class="content ui action input w-100" onclick="copyToClipboard('clipboard_input-{{ stockage.token }}');">
+    <div id="clipboard_div-{{ hub.token }}" class="content ui action input w-100" onclick="copyToClipboard('clipboard_input-{{ hub.token }}');">
         <script>
-            $('#clipboard_div-{{ stockage.token }}').popup({
+            $('#clipboard_div-{{ hub.token }}').popup({
                 content: "Copied!",
                 on: 'click',
                 position: 'bottom right',
             });
         </script>
-        <input id="clipboard_input-{{ stockage.token }}" type="text" value="{{ url('stockage_show', {'token': stockage.token}) }}" class="ui button" style="width: 90%;">
+        <input id="clipboard_input-{{ hub.token }}" type="text" value="{{ url('hub_show', {'token': hub.token}) }}" class="ui button" style="width: 90%;">
         <div class="ui teal right icon button">
             <i class="copy icon"></i>
         </div>
@@ -16,35 +16,35 @@
 <div class="ui card w-100">
     <div class="content">
         <div class="ui two buttons">
-            <a href="{{ path('stockage_archive', {'token': stockage.token}) }}"
+            <a href="{{ path('hub_archive', {'token': hub.token}) }}"
                 class="right floated ui icon button basic">
                 <i class="download green icon"></i>
             </a>
-            <a {% if app.user %} href="{{ path('like', {'type': 'stockage', 'token': stockage.token}) }}" {% endif %}
+            <a {% if app.user %} href="{{ path('like', {'type': 'hub', 'token': hub.token}) }}" {% endif %}
                 class="right floated ui icon button basic">
                 {% set liked = false %}
-                {% for like in stockage.likes %}
+                {% for like in hub.likes %}
                     {% if app.user == like.user %}
                         {% set liked = true %}
                     {% endif %}
                 {% endfor %}
-                {% if stockage.likes|length %}
-                    {{ stockage.likes|length }}
+                {% if hub.likes|length %}
+                    {{ hub.likes|length }}
                 {% endif %}
                 <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
             </a>
         </div>
     </div>
 </div>
-{% if app.user == stockage.user %}
+{% if app.user == hub.user %}
     <div class="ui card w-100">
         <div class="content">
             <div class="ui two buttons">
-                <a href="{{ path('stockage_edit', {'token': stockage.token}) }}"
+                <a href="{{ path('hub_edit', {'token': hub.token}) }}"
                     class="right floated ui icon button basic">
                     <i class="edit yellow icon"></i>
                 </a>
-                <a href="{{ path('stockage_remove', {'token': stockage.token}) }}"
+                <a href="{{ path('hub_remove', {'token': hub.token}) }}"
                     class="right floated ui icon button basic">
                     <i class="trash red icon"></i>
                 </a>

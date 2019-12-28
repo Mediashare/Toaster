@@ -42,16 +42,16 @@
                             <div class="date">{{ comment.updateDate|ago }}</div>
                         </div>
                     </div>
-                    <a {% if app.user %} href="{{ path('like', {'type': 'file', 'token': file.token}) }}" {% endif %}
+                    <a {% if app.user %} href="{{ path('like', {'type': 'comment', 'token': comment.id}) }}" {% endif %}
                         class="right floated ui icon">
                         {% set liked = false %}
-                        {% for like in file.likes %}
+                        {% for like in comment.likes %}
                             {% if app.user == like.user %}
                                 {% set liked = true %}
                             {% endif %}
                         {% endfor %}
-                        {% if file.likes|length %}
-                            {{ file.likes|length }}
+                        {% if comment.likes|length %}
+                            {{ comment.likes|length }}
                         {% endif %}
                         <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
                     </a>

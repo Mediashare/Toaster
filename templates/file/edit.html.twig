@@ -2,8 +2,8 @@
 
 {% block content %}
     <h2 class="ui dividing header">
-        <a href="{{ path('stockage_show', {'token': file.stockage.token}) }}">
-            {{ file.stockage.name }}
+        <a href="{{ path('hub_show', {'token': file.hub.token}) }}">
+            {{ file.hub.name }}
         </a>
         / 
         <a href="{{ path('file_show', {'token': file.token}) }}">
@@ -74,28 +74,28 @@
                         })
                     </script>
                     <div class="field">
-                        <label for="edit_stockages_input">Stockage(s)</label>
+                        <label for="edit_hubs_input">Hub(s)</label>
                         <div class="ui left icon input">
-                            <input onkeyup="checkInputs();" id="edit_stockages_input" class="w-100" name="stockages" type="text" required="true" placeholder="Stockages...">
+                            <input onkeyup="checkInputs();" id="edit_hubs_input" class="w-100" name="hubs" type="text" required="true" placeholder="Hubs...">
                             <i class="folder icon"></i>
                         </div>
                     </div>
                     <script>
                         // Form input tags
-                        var edit_stockages = new Array();
-                            edit_stockages.push({
-                                value: '{{ file.stockage.name }}',
-                                text: '{{ file.stockage.name }}',
+                        var edit_hubs = new Array();
+                            edit_hubs.push({
+                                value: '{{ file.hub.name }}',
+                                text: '{{ file.hub.name }}',
                                 selected: true,
                             });
-                        $('#edit_stockages_input').selectize({
+                        $('#edit_hubs_input').selectize({
                             delimiter: ',',
                             persist: false,
                             create: true,
-                            options: edit_stockages,
+                            options: edit_hubs,
                         });
-                        edit_stockages.forEach(function(data) {
-                            $('#edit_stockages_input')[0].selectize.addItem(data.value);
+                        edit_hubs.forEach(function(data) {
+                            $('#edit_hubs_input')[0].selectize.addItem(data.value);
                         })
                     </script>
 

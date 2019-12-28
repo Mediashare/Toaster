@@ -5,7 +5,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Like;
-use App\Entity\Stockage;
+use App\Entity\Hub;
 use App\Entity\File;
 use App\Entity\Comment;
 
@@ -35,7 +35,8 @@ class LikeController extends AbstractController
         endif;
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($like, $result['entity']);
+        $em->persist($like);
+        // $em->persist($result['entity']);
         $em->flush();
 
         return $this->redirectToRoute($result['route'], $result['parameters']);
@@ -44,17 +45,17 @@ class LikeController extends AbstractController
     /**
      * Find the good entity.
      *
-     * @param string $type ['stockage', 'file', 'comment']
+     * @param string $type ['hub', 'file', 'comment']
      * @param string $token
      * @return array $entity, $route, $parameters
      */
     private function getEntity(string $type, string $token) {
         $em = $this->getDoctrine()->getManager();
-        if ($type === "stockage"):
-            $entity = $em->getRepository(Stockage::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
+        if ($type === "hub"):
+            $entity = $em->getRepository(Hub::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
             return [
                 'entity' => $entity,
-                'route' => 'stockage_show',
+                'route' => 'hub_show',
                 'parameters' => ['token' => $entity->getToken()]
             ];
         elseif ($type === "file"):

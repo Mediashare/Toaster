@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} | Profile{% endblock %}
+{% block content %}
+
+<div id="page" class="ui grid">
+    <div class="three wide column">
+        {% include "profile/_menu.html.twig" %}
+    </div>
+    <div class="thirteen wide column">
+        {% if hubs is defined and hubs %}
+            <h2 class="ui dividing header">
+                <a href="{{ path('hub') }}">
+                    Hubs
+                </a>
+                / Liked
+            </h2>
+            <div class="ui relaxed divided list">
+                {% for hub in hubs %}    
+                    <div class="item">
+                        <i class="large folder middle aligned icon"></i>
+                        <div class="content">
+                            <a href="{{ path('hub_show', {'token': hub.token}) }}" class="header">{{ hub.name }} /</a>
+                            <div class="description">{{ hub.user.username }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        {% if files is defined and files %}
+            <h2 class="ui dividing header">
+                <a href="#">
+                    Files
+                </a>
+                / Liked
+            </h2>
+            <div class="ui four cards">
+                {% for file in files %}
+                    {% include "file/_card_min.html.twig" %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if comments is defined and comments %}    
+            <h2 class="ui dividing header">
+                <a href="{{ path('hub') }}">
+                    Comments
+                </a>
+                / Liked
+            </h2>
+            <div class="ui relaxed divided list">
+                {% for comment in comments %}    
+                    <div class="item">
+                        <i class="large comment middle aligned icon"></i>
+                        <div class="content">
+                            <div class="header">
+                                <a href="{{ path('hub_show', {'token': comment.file.hub.token}) }}">{{ comment.file.hub.name }}</a> / 
+                                <a href="{{ path('file_show', {'token': comment.file.token}) }}">{{ comment.file.filename }}</a>
+                            </div>
+                            <div class="description">{{ comment.content }}</div>
+                            <div class="extra">By {{ comment.user.username }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -6,7 +6,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Stockage;
+use App\Entity\Hub;
 use App\Entity\Tag;
 use App\Entity\File;
 
@@ -26,22 +26,26 @@ class UploadController extends AbstractController
         if ($request->isMethod('POST') && $files && count($files) > 0) {
             $files_description = $request->request->get('files_description');
             $files = $this->getFileUploaded($files, $files_description);
-            $tags = $this->getTags($request->request->get('tags'));
-            $stockages = $this->getStockages($request->request->get('stockages'));
-            foreach ($stockages as $stockage) {
-                $tmp_files = $this->recordFiles($stockage, $tags, $files);
+            if (!empty($request->request->get('tags'))):
+                $tags = $this->getTags($request->request->get('tags'));
+            else:
+                $tags = [];
+            endif;
+            $hubs = $this->getHubs($request->request->get('hubs'));
+            foreach ($hubs as $hub) {
+                $tmp_files = $this->recordFiles($hub, $tags, $files);
             }
             // Remove tmp files
             foreach ($tmp_files as $tmp_file) {
                 $this->filesystem->remove($tmp_file['filepath']);
             }
-            return $this->redirectToRoute('stockage_show', ['token' => $stockage->getToken()]);
+            return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
         }
         
-        $stockages = $this->em->getRepository(Stockage::class)->findAll();
+        $hubs = $this->em->getRepository(Hub::class)->findAll();
         $tags = $this->em->getRepository(Tag::class)->findAll();
         return $this->render('file/_form.html.twig', [
-            'stockages' => $stockages,
+            'hubs' => $hubs,
             'tags' => $tags
         ]);
     }
@@ -69,28 +73,28 @@ class UploadController extends AbstractController
         return $files;
     } 
 
-    private function getStockages(string $stockages) {
-        // New Stockage
-        $stockages = (array) explode(',', $stockages);
-        foreach ($stockages as $index => $name) {
-            $stockage = $this->em->getRepository(Stockage::class)->findOneBy(['name' => $name], ['updateDate' => 'DESC']);
-            if (!$stockage):
-                $stockage = new Stockage();
-                $stockage->setName($name);
-                $stockage->setPath($this->getParameter('stockage'));
+    private function getHubs(string $hubs) {
+        // New Hub
+        $hubs = (array) explode(',', $hubs);
+        foreach ($hubs as $index => $name) {
+            $hub = $this->em->getRepository(Hub::class)->findOneBy(['name' => $name], ['updateDate' => 'DESC']);
+            if (!$hub):
+                $hub = new Hub();
+                $hub->setName($name);
+                $hub->setPath($this->getParameter('stockage'));
                 if ($this->getUser()):
-                    $stockage->setUser($this->getUser());
+                    $hub->setUser($this->getUser());
                 endif;
             endif;
-            $stockage->setUpdateDate(new \DateTime());
-            unset($stockages[$index]);
-            $stockages[] = $stockage;
+            $hub->setUpdateDate(new \DateTime());
+            unset($hubs[$index]);
+            $hubs[] = $hub;
         }
-        return $stockages;
+        return $hubs;
     }
 
     private function getTags(string $tags) {
-        // New Stockage
+        // New Hub
         $tags = (array) explode(',', $tags);
         foreach ($tags as $index => $name) {
             $tag = $this->em->getRepository(Tag::class)->findOneBy(['name' => $name], ['updateDate' => 'DESC']);
@@ -104,15 +108,15 @@ class UploadController extends AbstractController
         return $tags;
     }
 
-    private function recordFiles(Stockage $stockage, array $tags, array $files) {
+    private function recordFiles(Hub $hub, array $tags, array $files) {
         foreach ($files as $file_data) {
             // Set file data
             $file = new File();
             $file->setFilename($file_data['filename']);
             $file->setDescription($file_data['description']);
             $file->setMetadata($file_data);
-            // Stockage
-            $file->setStockage($stockage);
+            // Hub
+            $file->setHub($hub);
             // Tags
             foreach ($tags as $tag) {
                 $file->addTag($tag);

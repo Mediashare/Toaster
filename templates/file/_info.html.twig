@@ -1,11 +1,11 @@
 <div class="content">
-    <a class="ui image yellow label item margin">
+    <a href="{{ path('profile', {'token': file.user.token}) }}" class="ui image yellow label item margin">
         {{ file.user.username }}
         <div class="detail">Author</div>
     </a>
-    <a class="ui image blue label item margin">
-        {{ file.stockage.name }}
-        <div class="detail">Stockage</div>
+    <a href="{{ path('hub_show', {'token': file.hub.token}) }}" class="ui image blue label item margin">
+        {{ file.hub.name }}
+        <div class="detail">Hub</div>
     </a>
     <a class="ui image blue label item margin">
         {{ file.size }}

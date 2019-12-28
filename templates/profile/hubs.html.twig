@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} | Profile{% endblock %}
+{% block content %}
+
+<div id="page" class="ui grid">
+    <div class="three wide column">
+        {% include "profile/_menu.html.twig" %}
+    </div>
+    <div class="thirteen wide column">
+        {% if hubs is defined and hubs %}
+            <h2 class="ui dividing header">
+                <a href="{{ path('profile', {'token': user.token}) }}">
+                    {{ user.username }}
+                </a>
+                / Hubs
+            </h2>
+            <div class="ui relaxed divided list">
+                {% for hub in hubs %}    
+                    <div class="item">
+                        <i class="large folder middle aligned icon"></i>
+                        <div class="content">
+                            <a href="{{ path('hub_show', {'token': hub.token}) }}" class="header">{{ hub.name }} /</a>
+                            <div class="description">{{ hub.user.username }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

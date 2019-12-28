@@ -58,9 +58,9 @@ class User implements UserInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Stockage", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Hub", mappedBy="user", orphanRemoval=true)
      */
-    private $stockages;
+    private $hubs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
@@ -83,7 +83,7 @@ class User implements UserInterface
         $this->setCreateDate(new \DateTime());
         $this->setUpdateDate(new \DateTime());
         $this->files = new ArrayCollection();
-        $this->stockages = new ArrayCollection();
+        $this->hubs = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
     }
@@ -238,30 +238,30 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Stockage[]
+     * @return Collection|Hub[]
      */
-    public function getStockages(): Collection
+    public function getHubs(): Collection
     {
-        return $this->stockages;
+        return $this->hubs;
     }
 
-    public function addStockage(Stockage $stockage): self
+    public function addHub(Hub $hub): self
     {
-        if (!$this->stockages->contains($stockage)) {
-            $this->stockages[] = $stockage;
-            $stockage->setUser($this);
+        if (!$this->hubs->contains($hub)) {
+            $this->hubs[] = $hub;
+            $hub->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeStockage(Stockage $stockage): self
+    public function removeHub(Hub $hub): self
     {
-        if ($this->stockages->contains($stockage)) {
-            $this->stockages->removeElement($stockage);
+        if ($this->hubs->contains($hub)) {
+            $this->hubs->removeElement($hub);
             // set the owning side to null (unless already changed)
-            if ($stockage->getUser() === $this) {
-                $stockage->setUser(null);
+            if ($hub->getUser() === $this) {
+                $hub->setUser(null);
             }
         }
 

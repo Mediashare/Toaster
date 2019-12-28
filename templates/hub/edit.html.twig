@@ -1,24 +1,24 @@
 {% extends "base.html.twig" %}
 {% block content %}
     <h2 class="ui dividing header">
-        <a href="{{ path('stockage_show', {'token': stockage.token}) }}">
-            {{ stockage.name }}
+        <a href="{{ path('hub_show', {'token': hub.token}) }}">
+            {{ hub.name }}
         </a>
         / Edit
     </h2>
 
     <div id="page">
-        <form method="POST" id="edit_stockage" class="ui form" style="margin-top: 1rem;">
+        <form method="POST" id="edit_hub" class="ui form" style="margin-top: 1rem;">
             <div class="ui grid">
                 <div class="ten wide column">
                     <div class="field">
-                        <label for="edit_stockage_description">Stockage Description</label>
+                        <label for="edit_hub_description">Hub Description</label>
                         <div class="ui card w-100">
-                            <textarea id="edit_stockage_description" name="edit_stockage_description" required="false">{{ stockage.description }}</textarea>
+                            <textarea id="edit_hub_description" name="edit_hub_description" required="false">{{ hub.description }}</textarea>
                         </div>
                     </div>
                     <script>
-                        var textarea_description = CodeMirror.fromTextArea(document.getElementById("edit_stockage_description"), {
+                        var textarea_description = CodeMirror.fromTextArea(document.getElementById("edit_hub_description"), {
                             mode: {
                                 name: "gfm",
                                 tokenTypeOverrides: {
@@ -37,11 +37,11 @@
                         <label>Name</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="name" placeholder="Stockage name" value="{{ stockage.name }}" required>
+                                <input type="text" name="name" placeholder="Hub name" value="{{ hub.name }}" required>
                             </div>
                         </div>
                     </div>
-                    <button onclick="$('form#edit_stockage').submit();" type="submit" class="ui button basic green">
+                    <button onclick="$('form#edit_hub').submit();" type="submit" class="ui button basic green">
                         <i class="edit icon"></i>
                         Edit
                     </button>

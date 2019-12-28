@@ -160,12 +160,12 @@ class Tag
         return $this;
     }
 
-    public function getStockages() {
-        $stockages = [];
+    public function getHubs() {
+        $hubs = [];
         foreach ($this->getFiles() as $file) {
-            $stockage = $file->getStockage();
-            $stockages[$stockage->getToken()] = $stockage;
+            $hub = $file->getHub();
+            $hubs[$hub->getToken()] = $hub;
         }
-        return $stockages;
+        return $hubs;
     }
 }

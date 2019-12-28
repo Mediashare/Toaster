@@ -1,9 +1,10 @@
 {% extends "base.html.twig" %}
+{% block title %}Toaster | {{ hub.name }} / {% endblock title %}
 {% block content %}
-{% set more_results = (stockage.files|length - files|length) %}
+{% set more_results = (hub.files|length - files|length) %}
     <h2 class="ui dividing header">
-        <a href="{{ path('stockage_show', {'token': stockage.token}) }}">
-            {{ stockage.name }}
+        <a href="{{ path('hub_show', {'token': hub.token}) }}">
+            {{ hub.name }}
         </a>
         /
     </h2>
@@ -21,25 +22,25 @@
         </div>
         <div class="six wide column">
             <div class="ui sticky sticky_page" style="padding-top: 4rem;">
-                {% if stockage.description %}
+                {% if hub.description %}
                     <h3 class="ui dividing header">
                         Description
                     </h3>
-                    {% include "stockage/_description.html.twig" %}
+                    {% include "hub/_description.html.twig" %}
                 {% endif %}
 
-                {% include "stockage/_actions.html.twig" %}
+                {% include "hub/_actions.html.twig" %}
 
                 <h3 class="ui dividing header">
                     Informations
                 </h3>
-                {% include "stockage/_info.html.twig" %}
+                {% include "hub/_info.html.twig" %}
                 
-                {% if stockage.tags %}
+                {% if hub.tags %}
                     <h3 class="ui dividing header">
                         Tags
                     </h3>
-                    {% include "stockage/_tags.html.twig" %}
+                    {% include "hub/_tags.html.twig" %}
                 {% endif %}
             </div>
         </div>

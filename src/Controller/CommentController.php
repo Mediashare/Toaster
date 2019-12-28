@@ -26,7 +26,7 @@ class CommentController extends AbstractController
                     $comment->setUser($this->getUser());
                 endif;
                 $file->setUpdateDate(new \DateTime());
-                $file->getStockage()->setUpdateDate(new \DateTime());
+                $file->getHub()->setUpdateDate(new \DateTime());
                 $em->persist($comment);
                 $em->flush();
             }

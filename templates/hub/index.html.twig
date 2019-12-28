@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Toaster | Hubs{% endblock title %}
 {% block content %}
-    {% for stockage in stockages %}
+    {% for hub in hubs %}
         <h2 class="ui dividing header">
-            <a href="{{ path('stockage_show', {'token': stockage.token}) }}">
-                {{ stockage.name }}
+            <a href="{{ path('hub_show', {'token': hub.token}) }}">
+                {{ hub.name }}
             </a>
             /
         </h2>
-        {% if stockage.files|length %}
+        {% if hub.files|length %}
             <div class="ui four cards">
-                {% for file in stockage.files|reverse|slice(0, 4) %}
+                {% for file in hub.files|reverse|slice(0, 4) %}
                     {% include "file/_card_min.html.twig" %}
                 {% endfor %}
             </div>

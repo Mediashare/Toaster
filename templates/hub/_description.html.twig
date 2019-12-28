@@ -1,7 +1,7 @@
-{% if stockage.description %}
+{% if hub.description %}
     <div class="ui card w-100">
         <div class="ui divider" style="margin: 0;"></div>
-        <textarea id="description">{{ stockage.description }}</textarea>
+        <textarea id="description">{{ hub.description }}</textarea>
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("description"), {
                 mode: {

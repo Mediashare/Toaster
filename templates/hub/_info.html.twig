@@ -1,18 +1,18 @@
 <div class="content">
-    <a class="ui image yellow label item margin">
-        {{ stockage.user.username }}
+    <a href="{{ path('profile', {'token': hub.user.token}) }}" class="ui image yellow label item margin">
+        {{ hub.user.username }}
         <div class="detail">Author</div>
     </a>
     <a class="ui image blue label item margin">
-        {{ stockage.files|length }}
+        {{ hub.files|length }}
         <div class="detail">Files</div>
     </a>
     <a class="ui image blue label item margin">
-        {{ stockage.size }}
+        {{ hub.size }}
         <div class="detail">Size</div>
     </a>
     <a class="ui image teal label item margin">
-        {{ stockage.updateDate|ago }}
+        {{ hub.updateDate|ago }}
         <div class="detail">Last update</div>
     </a>
 </div>

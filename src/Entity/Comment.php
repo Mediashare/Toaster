@@ -154,4 +154,10 @@ class Comment
 
         return $this;
     }
+
+    public function removeLikes() {
+        foreach ($this->getLikes() as $like) {
+            $this->removeLike($like);
+        }
+    }
 }

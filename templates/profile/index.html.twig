@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} | Profile{% endblock %}
+{% block content %}
+
+<div id="page" class="ui grid">
+    <div class="three wide column">
+        {% include "profile/_menu.html.twig" %}
+    </div>
+    <div class="thirteen wide column">
+        <h2 class="ui dividing header">{{ user.username }} / </h2>
+        {% if user.files|length %}
+            <div class="ui one cards">
+                {% for file in user.files|reverse %}
+                    {% set hub = file.hub %}
+                    {% include "file/_card.html.twig" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>
+                File(s) is not found.
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

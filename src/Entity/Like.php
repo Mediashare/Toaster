@@ -23,17 +23,17 @@ class Like
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stockage", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hub", inversedBy="likes", cascade={"persist"})
      */
-    private $stockage;
+    private $hub;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\File", inversedBy="likes", cascade={"persist"})
      */
     private $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="likes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Comment", inversedBy="likes", cascade={"persist"})
      */
     private $comment;
 
@@ -67,14 +67,14 @@ class Like
         return $this;
     }
 
-    public function getStockage(): ?Stockage
+    public function getHub(): ?Hub
     {
-        return $this->stockage;
+        return $this->hub;
     }
 
-    public function setStockage(?Stockage $stockage): self
+    public function setHub(?Hub $hub): self
     {
-        $this->stockage = $stockage;
+        $this->hub = $hub;
 
         return $this;
     }

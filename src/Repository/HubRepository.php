@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Stockage;
+use App\Entity\Hub;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Stockage|null find($id, $lockMode = null, $lockVersion = null)
- * @method Stockage|null findOneBy(array $criteria, array $orderBy = null)
- * @method Stockage[]    findAll()
- * @method Stockage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Hub|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Hub|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Hub[]    findAll()
+ * @method Hub[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StockageRepository extends ServiceEntityRepository
+class HubRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Stockage::class);
+        parent::__construct($registry, Hub::class);
     }
 
     // /**
-    //  * @return Stockage[] Returns an array of Stockage objects
+    //  * @return Hub[] Returns an array of Hub objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StockageRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Stockage
+    public function findOneBySomeField($value): ?Hub
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')

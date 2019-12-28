@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ user.username }} | Profile{% endblock %}
+{% block content %}
+
+<div id="page" class="ui grid">
+    <div class="three wide column">
+        {% include "profile/_menu.html.twig" %}
+    </div>
+    <div class="thirteen wide column">
+        <h2 class="ui dividing header">
+            <a href="{{ path('profile', {'token': user.token}) }}">
+                {{ user.username }}
+            </a>
+            / Files
+        </h2>
+        <div class="ui four cards">
+            {% for file in files %}
+                {% include "file/_card_min.html.twig" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

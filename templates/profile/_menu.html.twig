@@ -1,0 +1,20 @@
+<div class="ui secondary vertical menu">
+    <a href="{{ path('profile', {'token': user.token}) }}" class="{% if app.request.get('_route') == 'profile' %}active{% endif %} item">
+        Feed
+    </a>
+    <a href="{{ path('profile_hubs', {'token': user.token}) }}" class="{% if app.request.get('_route') == 'profile_hubs' %}active{% endif %} item">
+        Hubs
+    </a>
+    <a href="{{ path('profile_files', {'token': user.token}) }}" class="{% if app.request.get('_route') == 'profile_files' %}active{% endif %} item">
+        Files
+    </a>
+    <div class="ui dropdown item ">
+        <i class="dropdown icon"></i>
+        Liked
+        <div class="menu">
+            <a href="{{ path('profile_likes', {'token': user.token, 'type': 'hub'}) }}" class="item">Hubs</a>
+            <a href="{{ path('profile_likes', {'token': user.token, 'type': 'file'}) }}" class="item">Files</a>
+            <a href="{{ path('profile_likes', {'token': user.token, 'type': 'comment'}) }}" class="item">Comments</a>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 {% extends "base.html.twig" %}
-
+{% block title %}Toaster | {{ file.hub.name }} / {{ file.filename }}{% endblock title %}
 {% block content %}
     <h2 class="ui dividing header">
-        <a href="{{ path('stockage_show', {'token': file.stockage.token}) }}">{{ file.stockage.name }}</a>
+        <a href="{{ path('hub_show', {'token': file.hub.token}) }}">{{ file.hub.name }}</a>
         / {{ file.filename }}
     </h2>
     <div id="page" class="ui grid">

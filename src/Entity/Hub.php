@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StockageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\HubRepository")
  */
-class Stockage
+class Hub
 {
     /**
      * @ORM\Id()
@@ -55,18 +55,18 @@ class Stockage
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="stockages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="hubs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="stockage")
+     * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="hub")
      */
     private $likes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="stockage", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="hub", orphanRemoval=true)
      */
     private $files;
 
@@ -185,7 +185,7 @@ class Stockage
     }
 
     /**
-     * Test if checksum was already record in this Stockage
+     * Test if checksum was already record in this Hub
      *
      * @param string $checksum
      * @return bool
@@ -235,7 +235,7 @@ class Stockage
     {
         if (!$this->likes->contains($like)) {
             $this->likes[] = $like;
-            $like->setStockage($this);
+            $like->setHub($this);
         }
 
         return $this;
@@ -246,8 +246,8 @@ class Stockage
         if ($this->likes->contains($like)) {
             $this->likes->removeElement($like);
             // set the owning side to null (unless already changed)
-            if ($like->getStockage() === $this) {
-                $like->setStockage(null);
+            if ($like->getHub() === $this) {
+                $like->setHub(null);
             }
         }
 
@@ -290,7 +290,7 @@ class Stockage
     {
         if (!$this->files->contains($file)) {
             $this->files[] = $file;
-            $file->setStockage($this);
+            $file->setHub($this);
         }
 
         return $this;
@@ -302,8 +302,8 @@ class Stockage
             $file->remove();
             $this->files->removeElement($file);
             // set the owning side to null (unless already changed)
-            if ($file->getStockage() === $this) {
-                $file->setStockage(null);
+            if ($file->getHub() === $this) {
+                $file->setHub(null);
             }
         }
 

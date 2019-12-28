@@ -77,10 +77,10 @@ class File
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Stockage", inversedBy="files", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hub", inversedBy="files", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $stockage;
+    private $hub;
 
     public function __toString() {
         return (string) $this->getFilename();
@@ -162,7 +162,7 @@ class File
 
     public function getPath(): ?string
     {
-        $filepath = $this->getStockage()->getPath() . '/';
+        $filepath = $this->getHub()->getPath() . '/';
         $filepath .= $this->getToken() . '.';
         $filepath .= $this->getMetadata()['extension'] ?? null;
         return $filepath;
@@ -195,7 +195,7 @@ class File
     public function setChecksum()
     {
         $checksum = \md5_file($this->getPath());
-        if (!$this->getStockage()->checksum($checksum)):
+        if (!$this->getHub()->checksum($checksum)):
             $this->checksum = $checksum;
             return $this;
         else:
@@ -296,6 +296,13 @@ class File
         return $this;
     }
 
+    public function removeLikes() {
+        foreach ($this->getLikes() as $like) {
+            $this->removeLike($like);
+        }
+        return true;
+    }
+
     /**
      * @return Collection|Tag[]
      */
@@ -324,14 +331,14 @@ class File
         return $this;
     }
 
-    public function getStockage(): ?Stockage
+    public function getHub(): ?Hub
     {
-        return $this->stockage;
+        return $this->hub;
     }
 
-    public function setStockage(?Stockage $stockage): self
+    public function setHub(?Hub $hub): self
     {
-        $this->stockage = $stockage;
+        $this->hub = $hub;
 
         return $this;
     }

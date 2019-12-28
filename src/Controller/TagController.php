@@ -4,7 +4,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Stockage;
+use App\Entity\Hub;
 use App\Entity\File;
 use App\Entity\Tag;
 
@@ -30,20 +30,20 @@ class TagController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $tags = $em->getRepository(Tag::class)->search($slug);
         
-        $stockages = [];
+        $hubs = [];
         foreach ($tags as $tag) {
             $files = $em->getRepository(File::class)->findByTag($tag);
             foreach ($files as $file) {
-                $stockage = $file->getStockage();
-                $stockages[$stockage->getToken()]['token'] = $stockage->getToken();
-                $stockages[$stockage->getToken()]['name'] = $stockage->getName();
-                $stockages[$stockage->getToken()]['files'][] = $file;
+                $hub = $file->getHub();
+                $hubs[$hub->getToken()]['token'] = $hub->getToken();
+                $hubs[$hub->getToken()]['name'] = $hub->getName();
+                $hubs[$hub->getToken()]['files'][] = $file;
                 
             }
         }
         return $this->render('tag/show.html.twig', [
             'tag' => $tag,
-            'stockages' => $stockages,
+            'hubs' => $hubs,
         ]);
     }
 }

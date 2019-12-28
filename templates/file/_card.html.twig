@@ -35,26 +35,28 @@
         </video>
         <div class="ui divider" style="margin: 0;"></div>
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
-        <div class="ui divider" style="margin: 0;"></div>
-        <div class="CodeMirror_25vh">
-            <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>
-            <script>
-                var file_editor = CodeMirror.fromTextArea(document.getElementById("file-{{ file.token }}"), {
-                    mode: {
-                        name: "gfm",
-                        tokenTypeOverrides: {
-                            emoji: "emoji"
-                        }
-                    },
-                    readOnly: true,
-                    scrollbarStyle: "null",
-                    lineNumbers: true,
-                    lineWrapping: true,
-                    theme: "default"
-                });
-                file_editor.setSize("100%", "100%");
-            </script>
-        </div>
+        {% if file %}
+            <div class="ui divider" style="margin: 0;"></div>
+            <div class="CodeMirror_25vh">
+                <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>
+                <script>
+                    var file_editor = CodeMirror.fromTextArea(document.getElementById("file-{{ file.token }}"), {
+                        mode: {
+                            name: "gfm",
+                            tokenTypeOverrides: {
+                                emoji: "emoji"
+                            }
+                        },
+                        readOnly: true,
+                        scrollbarStyle: "null",
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        theme: "default"
+                    });
+                    file_editor.setSize("100%", "100%");
+                </script>
+            </div>
+        {% endif %}
     {% endif %}  
     {% if file.description %}
         <div class="ui divider" style="margin: 0;"></div>
@@ -82,8 +84,8 @@
         <div class="ui grid">
             <div class="eight wide column">
                 <div class="ui header">
-                    <a href="{{ path('stockage_show', {'token': stockage.token}) }}">
-                        {{ stockage.name }}
+                    <a href="{{ path('hub_show', {'token': hub.token}) }}">
+                        {{ hub.name }}
                     </a>
                     /
                     <a href="{{ path('file_show', {'token': file.token}) }}">
