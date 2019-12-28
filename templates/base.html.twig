@@ -2,11 +2,39 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}FileSystem{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        
+        {# Semantic #}
+        <link rel="stylesheet" type="text/css" href="{{ asset('semantic/semantic.min.css') }}">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="{{ asset('semantic/semantic.min.js') }}"></script>
+
+        {# CodeMirror #}
+        <link rel="stylesheet" href="{{ asset('codemirror/codemirror.css') }}">
+        <script src="{{ asset('codemirror/codemirror.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('codemirror/addon/scroll/simplescrollbars.css') }}">
+        <script src="{{ asset('codemirror/addon/scroll/simplescrollbars.js') }}"></script>
+        <script src="{{ asset('codemirror/addon/mode/overlay.js') }}"></script>
+        <script src="{{ asset('codemirror/mode/xml/xml.js') }}"></script>
+        <script src="{{ asset('codemirror/mode/markdown/markdown.js') }}"></script>
+        <script src="{{ asset('codemirror/mode/gfm/gfm.js') }}"></script>
+
+        {# Selectize (input tags) #}
+        <link rel="stylesheet" href="{{ asset('selectize/css/selectize.css') }}">
+        <link rel="stylesheet" href="{{ asset('selectize/css/selectize.default.css') }}">
+        <script src="{{ asset('selectize/js/standalone/selectize.js') }}"></script>
+        
+        {# Custom css #}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body id="body">
+        <div class="ui container">
+            {% include "_menu.html.twig" %}
+            {% block content %}{% endblock %}
+        </div>
+
+        <script src="{{ asset('js/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

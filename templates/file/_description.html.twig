@@ -1,0 +1,20 @@
+{% if file.description %}
+    <div class="ui card w-100">
+        <textarea id="file_description_1">{{ file.description }}</textarea>
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("file_description_1"), {
+                mode: {
+                    name: "gfm",
+                    tokenTypeOverrides: {
+                        emoji: "emoji"
+                    }
+                },
+                readOnly: true,
+                scrollbarStyle: "simple",
+                lineNumbers: true,
+                theme: "default"
+            });
+            editor.setSize("100%", "100%");
+        </script>
+    </div>
+{% endif %}

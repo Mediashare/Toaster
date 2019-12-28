@@ -1,0 +1,33 @@
+<div id="searchBar" style="display: none;">
+    <div class="ui search" style="height: 100%;">
+        <input class="prompt" type="text" style="border-radius: 0;height: 100%;" placeholder="Search file...">
+    </div>
+    <div class="results"></div>
+</div>
+<script>
+    $('.ui.search').search({
+        apiSettings: {
+            url: '{{ url("search") }}?query={query}'
+        },
+        fields: {
+            results : 'results',
+            title   : 'title',
+            url     : 'url'
+        },
+        type: 'category'
+    });
+
+    function searchBar() {
+        var button = $('#button_search');
+        console.log(button.attr('data-search-enable'));
+        if (button.attr('data-search-enable')) {
+            $('#searchBar').show('slow');
+            $('.sticky_menu .hide').hide('slow');
+            button.removeAttr('data-search-enable');
+        } else {
+            $('#searchBar').hide('slow');
+            $('.sticky_menu .hide').show('slow');
+            button.attr('data-search-enable', true);
+        }
+    }
+</script>

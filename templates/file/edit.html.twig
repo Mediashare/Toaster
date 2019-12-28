@@ -1,0 +1,110 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <h2 class="ui dividing header">
+        <a href="{{ path('stockage_show', {'token': file.stockage.token}) }}">
+            {{ file.stockage.name }}
+        </a>
+        / 
+        <a href="{{ path('file_show', {'token': file.token}) }}">
+            {{ file.filename }}
+        </a>
+        / Edit
+    </h2>
+
+    <div id="page">
+        <form method="POST" class="ui form  w-100" style="margin-top: 1rem;">
+            <div class="ui grid">
+                <div class="ten wide column">
+                    <div class="field">
+                        <label for="edit_file_description">File Description</label>
+                        <div class="ui card w-100">
+                            <textarea id="edit_file_description" name="edit_file_description" required="false">{{ file.description }}</textarea>
+                        </div>
+                    </div>
+                    <script>
+                        var textarea_description = CodeMirror.fromTextArea(document.getElementById("edit_file_description"), {
+                            mode: {
+                                name: "gfm",
+                                tokenTypeOverrides: {
+                                    emoji: "emoji"
+                                }
+                            },
+                            scrollbarStyle: "simple",
+                            lineNumbers: true,
+                            theme: "default"
+                        });
+                        textarea_description.setSize("100%", "100%");
+                    </script>
+                </div>
+                <div class="six wide column">
+                    <div class="field">
+                        <label>Filename</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <input class="w-100" type="text" name="filename" placeholder="Filename" value="{{ file.filename }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="edit_tags_input">Tag(s)</label>
+                        <div class="ui left icon input">
+                            <input onkeyup="checkInputs();" id="edit_tags_input" class="w-100" name="tags" type="text" required="true" placeholder="Tags...">
+                            <i class="tags icon"></i>
+                        </div>
+                    </div>
+                    <script>
+                        // Form input tags
+                        var edit_tags = new Array();
+                        {% for tag in file.tags %}
+                            edit_tags.push({
+                                value: '{{ tag.name }}',
+                                text: '{{ tag.name }}',
+                                selected: true,
+                            });
+                        {% endfor %}
+                        $('#edit_tags_input').selectize({
+                            delimiter: ',',
+                            persist: false,
+                            create: true,
+                            options: edit_tags,
+                        });
+                        edit_tags.forEach(function(data) {
+                            $('#edit_tags_input')[0].selectize.addItem(data.value);
+                        })
+                    </script>
+                    <div class="field">
+                        <label for="edit_stockages_input">Stockage(s)</label>
+                        <div class="ui left icon input">
+                            <input onkeyup="checkInputs();" id="edit_stockages_input" class="w-100" name="stockages" type="text" required="true" placeholder="Stockages...">
+                            <i class="folder icon"></i>
+                        </div>
+                    </div>
+                    <script>
+                        // Form input tags
+                        var edit_stockages = new Array();
+                            edit_stockages.push({
+                                value: '{{ file.stockage.name }}',
+                                text: '{{ file.stockage.name }}',
+                                selected: true,
+                            });
+                        $('#edit_stockages_input').selectize({
+                            delimiter: ',',
+                            persist: false,
+                            create: true,
+                            options: edit_stockages,
+                        });
+                        edit_stockages.forEach(function(data) {
+                            $('#edit_stockages_input')[0].selectize.addItem(data.value);
+                        })
+                    </script>
+
+                    <button type="submit" class="ui button basic green">
+                        <i class="edit icon"></i>
+                        Edit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+<div class="content">
+    <a class="ui image yellow label item margin">
+        {{ file.user.username }}
+        <div class="detail">Author</div>
+    </a>
+    <a class="ui image blue label item margin">
+        {{ file.stockage.name }}
+        <div class="detail">Stockage</div>
+    </a>
+    <a class="ui image blue label item margin">
+        {{ file.size }}
+        <div class="detail">Size</div>
+    </a>
+    <a class="ui image violet label item margin">
+        {{ file.metadata.extension }}
+        <div class="detail">Extension</div>
+    </a>
+    <a class="ui image violet label item margin">
+        {{ file.metadata.mimeType }}
+        <div class="detail">Mime Type</div>
+    </a>
+    <a class="ui image teal label item margin">
+        {{ file.updateDate|ago }}
+        <div class="detail">Last update</div>
+    </a>
+</div>

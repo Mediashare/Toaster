@@ -1,0 +1,54 @@
+<div class="ui card w-100">
+    <div id="clipboard_div-{{ stockage.token }}" class="content ui action input w-100" onclick="copyToClipboard('clipboard_input-{{ stockage.token }}');">
+        <script>
+            $('#clipboard_div-{{ stockage.token }}').popup({
+                content: "Copied!",
+                on: 'click',
+                position: 'bottom right',
+            });
+        </script>
+        <input id="clipboard_input-{{ stockage.token }}" type="text" value="{{ url('stockage_show', {'token': stockage.token}) }}" class="ui button" style="width: 90%;">
+        <div class="ui teal right icon button">
+            <i class="copy icon"></i>
+        </div>
+    </div>
+</div>
+<div class="ui card w-100">
+    <div class="content">
+        <div class="ui two buttons">
+            <a href="{{ path('stockage_archive', {'token': stockage.token}) }}"
+                class="right floated ui icon button basic">
+                <i class="download green icon"></i>
+            </a>
+            <a {% if app.user %} href="{{ path('like', {'type': 'stockage', 'token': stockage.token}) }}" {% endif %}
+                class="right floated ui icon button basic">
+                {% set liked = false %}
+                {% for like in stockage.likes %}
+                    {% if app.user == like.user %}
+                        {% set liked = true %}
+                    {% endif %}
+                {% endfor %}
+                {% if stockage.likes|length %}
+                    {{ stockage.likes|length }}
+                {% endif %}
+                <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% if app.user == stockage.user %}
+    <div class="ui card w-100">
+        <div class="content">
+            <div class="ui two buttons">
+                <a href="{{ path('stockage_edit', {'token': stockage.token}) }}"
+                    class="right floated ui icon button basic">
+                    <i class="edit yellow icon"></i>
+                </a>
+                <a href="{{ path('stockage_remove', {'token': stockage.token}) }}"
+                    class="right floated ui icon button basic">
+                    <i class="trash red icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

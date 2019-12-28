@@ -1,0 +1,12 @@
+/** Global **/
+.w-100 {width: 100%!important;}
+.margin {margin: 0.2rem!important;}
+/** Menu **/
+.menu {z-index: 900!important;}
+/** Form **/
+input#files_input {border: none;padding-top: 0.5rem;}
+/** CodeMirror **/
+.CodeMirror {height: auto!important;}
+.CodeMirror_25vh .CodeMirror {max-height: 25vh!important;}
+.CodeMirror-debug .CodeMirror-line {padding-left: 3rem!important;}
+.CodeMirror .column {overflow: scroll!important;}

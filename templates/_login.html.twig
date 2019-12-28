@@ -1,0 +1,29 @@
+<form method="POST" action="{{ path('app_login') }}" class="ui form">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    <div class="two fields">
+        <div class="field ui input">
+            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" required autofocus placeholder="Username">
+        </div>
+        <div class="field ui input">
+            <input type="password" name="password" id="inputPassword" required placeholder="Password">
+        </div>
+    </div>
+
+    <div class="field ui checkbox inline">
+        <input type="checkbox" name="_remember_me" id="remember_me"> 
+        <label for="remember_me">Remember me</label>
+    </div>
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+    #}
+
+    <button class="ui button basic green" type="submit">
+        Sign in
+    </button>
+</form>

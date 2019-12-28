@@ -1,0 +1,8 @@
+<div class="content">
+    {% for tag in stockage.tags %}
+        <a href="{{ path('tag_show', {'slug': tag.data.slug}) }}" class="ui image purple label item margin">
+            {{ tag.data.name }}
+            <div class="detail">{{ tag.counter }}</div>
+        </a>
+    {% endfor %}
+</div>

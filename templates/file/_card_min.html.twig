@@ -1,0 +1,54 @@
+<div class="card">
+    {% set image = 'image/' in file.metadata.mimeType %}
+    {% if image %}
+        <style>
+            div#file_view-{{ file.token }} {
+                background: url("{{ path('file_download', {'token': file.token}) }}") !important;
+                background-size: auto;
+                background-repeat: no-repeat;
+                background-size: 100% 100% !important;
+                height: 120px;
+            }
+        </style>
+        
+        <a href="{{ path('file_show', {'token': file.token}) }}">
+            <div id="file_view-{{ file.token }}"></div>
+        </a>
+    {% endif %} 
+    <div class="content" style="word-wrap: anywhere;">
+        <a href="{{ path('file_show', {'token': file.token}) }}">
+            <div class="header ui medium href">
+                {{ file.filename }}
+            </div>
+            <div class="meta">
+                {{ file.metadata.mimeType }}
+            </div>
+        </a>
+    </div>
+    <div class="extra content">
+        <div class="right floated ui buttons">
+            <a href="{{ path('file_show', {'token': file.token}) }}#comments"
+                class="right floated ui icon button basic">
+                {% if file.comments|length %}
+                    {% if file.comments %}
+                        {{ file.comments|length }}
+                    {% endif %}
+                {% endif %}
+                <i class="comments outline icon blue"></i>
+            </a>
+            <a {% if app.user %} href="{{ path('like', {'type': 'file', 'token': file.token}) }}" {% endif %}
+                class="right floated ui icon button basic">
+                {% set liked = false %}
+                {% for like in file.likes %}
+                    {% if app.user == like.user %}
+                        {% set liked = true %}
+                    {% endif %}
+                {% endfor %}
+                {% if file.likes|length %}
+                    {{ file.likes|length }}
+                {% endif %}
+                <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="ui menu sticky_menu">
+    <a href="{{ path('app') }}" class="header item">FileSystem</a>
+    <a href="{{ path('stockage') }}" class="item">Stockages</a>
+    <a href="{{ path('tag') }}" class="item">Tags</a>
+    <div class="right menu">
+        <a id="button_search" onclick="searchBar();" class="item" data-search-enable="false">
+            <i class="search icon"></i>
+        </a>
+        {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
+        {# {% if app.request.get('_route') == 'stockage_show' %}
+            <div class="item">
+                <div class="ui action left icon input">
+                    <i class="search icon"></i>
+                    <input type="text" placeholder="Search">
+                    <button class="ui button">Submit</button>
+                </div>
+            </div>
+        {% endif %} #}
+        {% if app.user %}
+            <div class="ui dropdown item">
+                <i class="user icon"></i> {{ app.user.username }} <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item">Profile</a>
+                    <a href="{{ path('app_logout') }}" class="item">
+                        Logout
+                    </a>
+                </div>
+            </div>
+            <button onclick="$('.ui.modal').modal('show');" class="item ui button">
+                <div class="ui positive right labeled icon">
+                    <i class="upload icon"></i> Send File(s)
+                </div>
+            </button>
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header">
+                    Send File(s)
+                </div>
+                <div class="image content">
+                    <div class="description"> 
+                        <div class="ui header">
+                            You can submit files in one or more different storage(s) via this form.
+                        </div>
+                        <p>
+                            It may be useful to duplicate storage points for your data to avoid any loss due to misuse, for example.
+                        </p>
+                        {{ render(controller('App\\Controller\\UploadController::form')) }}
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="ui red deny button">
+                        Nope
+                    </div>
+                    <div id="file_submit_button" type="button" onclick="$('form#file_submit').submit();" class="ui positive right labeled icon button disabled">
+                        Send
+                        <i class="upload icon"></i>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <a href="{{ path('app_register') }}" class="item ui button">
+                <div class="ui positive right labeled icon">
+                    <i class="user plus icon"></i> Registration
+                </div>
+            </a>
+            <a href="{{ path('app_login') }}" class="item ui button">
+                <div class="ui positive right labeled icon">
+                    <i class="user icon"></i> Login
+                </div>
+            </a>
+        {% endif %}
+    </div>
+</div>

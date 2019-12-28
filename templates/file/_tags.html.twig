@@ -1,0 +1,8 @@
+<div class="content">
+    {% for tag in file.tags %}
+        <a href="{{ path('tag_show', {'slug': tag.slug}) }}" class="ui image purple label item margin">
+            {{ tag.name }}
+            <div class="detail">#</div>
+        </a>
+    {% endfor %}
+</div>

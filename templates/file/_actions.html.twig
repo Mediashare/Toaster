@@ -1,0 +1,61 @@
+<div class="ui card w-100">
+    <div id="clipboard_div-{{ file.token }}" class="content ui action input w-100" onclick="copyToClipboard('clipboard_input-{{ file.token }}');">
+        <script>
+            $('#clipboard_div-{{ file.token }}').popup({
+                content: "Copied!",
+                on: 'click',
+                position: 'bottom right',
+            });
+        </script>
+        <input id="clipboard_input-{{ file.token }}" type="text" value="{{ url('file_show', {'token': file.token}) }}" class="ui button" style="width: 90%;">
+        <div class="ui teal right icon button">
+            <i class="copy icon"></i>
+        </div>
+    </div>
+</div>
+<div class="ui card w-100">
+    <div class="content">
+        <div class="ui three buttons">
+            <a href="{{ path('file_download', {'token': file.token}) }}"
+                class="right floated ui icon button basic">
+                <i class="download green icon"></i>
+            </a>
+            <a {% if app.user %} href="{{ path('like', {'type': 'file', 'token': file.token}) }}" {% endif %}
+                class="right floated ui icon button basic">
+                {% set liked = false %}
+                {% for like in file.likes %}
+                    {% if app.user == like.user %}
+                        {% set liked = true %}
+                    {% endif %}
+                {% endfor %}
+                {% if file.likes|length %}
+                    {{ file.likes|length }}
+                {% endif %}
+                <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
+            </a>
+            <a href="#comments"
+                class="right floated ui icon button basic">
+                {% if file.comments %}
+                    {{ file.comments|length }}
+                {% endif %}
+                <i class="comments outline icon blue"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% if app.user == file.user %}
+    <div class="ui card w-100">
+        <div class="content">
+            <div class="ui two buttons">
+                <a href="{{ path('file_edit', {'token': file.token}) }}"
+                    class="right floated ui icon button basic">
+                    <i class="edit yellow icon"></i>
+                </a>
+                <a href="{{ path('file_remove', {'token': file.token}) }}"
+                    class="right floated ui icon button basic">
+                    <i class="trash red icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    {% for stockage in stockages %}
+        <h2 class="ui dividing header">
+            <a href="{{ path('stockage_show', {'token': stockage.token}) }}">{{ stockage.name }}</a>
+            / 
+            <a href="{{ path('tag_show', {'slug': tag.slug}) }}">#{{ tag.name }}</a>
+        </h2>
+        {% if stockage.files|length %}
+            <div class="ui one cards">
+                {% for file in stockage.files|reverse %}
+                    {% include "file/_card.html.twig" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>
+                File(s) is not found.
+            </p>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

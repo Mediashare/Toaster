@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <h2 class="ui dividing header">
+        <a href="{{ path('stockage_show', {'token': file.stockage.token}) }}">{{ file.stockage.name }}</a>
+        / {{ file.filename }}
+    </h2>
+    <div id="page" class="ui grid">
+        <div class="ten wide column">
+            {% include "file/_content.html.twig" %}
+        </div>
+        <div class="six wide column">
+            <div class="ui sticky sticky_page">
+                {% if file.description %}
+                    <h3 class="ui dividing header">
+                        Description
+                    </h3>
+                    {% include "file/_description.html.twig" %}
+                {% endif %}
+
+                {% include "file/_actions.html.twig" %}
+                
+                <h3 class="ui dividing header">
+                    Informations
+                </h3>
+                {% include "file/_info.html.twig" %}
+
+                {% if file.tags|length %}
+                    <h3 class="ui dividing header">
+                        Tags
+                    </h3>
+                    {% include "file/_tags.html.twig" %}
+                {% endif %}
+                
+                <h3 id="comments" class="ui dividing header">
+                    Comments
+                </h3>
+                {% include "file/_comments.html.twig" %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

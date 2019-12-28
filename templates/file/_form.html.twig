@@ -1,0 +1,132 @@
+<form id="file_submit" class="ui form field CodeMirror-debug" action="{{ path('upload_file') }}" method="POST" enctype="multipart/form-data">
+    <label for="files_input">Choose File(s)*</label>
+    <div class="ui field input require">
+        <input onchange="checkInputs();" id="files_input" type="file" name="files[]" multiple required="true">
+    </div>
+    <div id="filesDescription" class="field" style="display: none;">
+        <label for="files_description">Files Description</label>
+        <textarea id="files_description" name="files_description" required="false"></textarea>
+        <script>
+            var textarea_description = CodeMirror.fromTextArea(document.getElementById("files_description"), {
+                mode: {
+                    name: "gfm",
+                    tokenTypeOverrides: {
+                        emoji: "emoji"
+                    }
+                },
+                scrollbarStyle: "simple",
+                lineNumbers: true,
+                theme: "default"
+            });
+            textarea_description.setSize("100%", "100%");
+        </script>
+    </div>
+    <div class="two fields">
+        <div class="field">
+            <label for="stockages_input">Stockage(s)*</label>
+            <div class="ui left icon input">
+                <input onkeyup="checkInputs();" id="stockages_input" class="w-100" name="stockages" type="text" required="true" placeholder="Stockages...">
+                <i class="tags icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <label for="tags_input">Add Tag(s)</label>
+            <div class="ui left icon input">
+                <input onkeyup="checkInputs();" id="tags_input" class="w-100" name="tags" type="text" required="true" placeholder="Tags...">
+                <i class="tags icon"></i>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    // Form input stockages
+    var stockages = new Array();
+    {% for stockage in stockages %}
+        stockages.push({
+            value: '{{ stockage.name }}',
+            text: '{{ stockage.name }}',
+            selected: false
+        });
+    {% endfor %}
+    var stockages_input = $('#stockages_input').selectize({
+        delimiter: ',',
+        persist: true,
+        create: true,
+        options: stockages,
+        onChange: function (value) {
+            checkInputs();
+        }
+    });
+
+    // Form input tags
+    var tags = new Array();
+    {% for tag in tags %}
+        tags.push({
+            value: '{{ tag.name }}',
+            text: '{{ tag.name }}',
+            selected: false
+        });
+    {% endfor %}
+    $('#tags_input').selectize({
+        delimiter: ',',
+        persist: true,
+        create: true,
+        options: tags,
+    });
+
+    checkInputs();
+
+    function checkInputs() {
+        var button = true;
+        var form = "form#file_submit";
+
+        var files = $(form + ' input#files_input').val();
+        if (!$.trim(files).length) {
+            var button = false;
+            filesDescription(false);
+        } else {
+            filesDescription(true);
+        }
+        
+        var stockages_input = $('#stockages_input').val();
+        if (!$.trim(stockages_input).length) {
+            var button = false;
+        }
+        
+        var tags_input = $('#tags_input').val();
+
+        //if ($.trim(stockage).length > 0) {
+        //   stockageDescription(true);
+        //} else {
+        //    stockageDescription(false);    
+        //}
+        
+        // Form is valid!
+        setSubmitButton(button);
+    }
+
+    function filesDescription(bool) {
+        if (bool) {
+            $("div#filesDescription").show('slow');
+        } else {
+            $("div#filesDescription").hide('slow');
+        }
+    }
+
+    function stockageDescription(bool) {
+        if (bool) {
+            $("div#stockageDescription").show('slow');
+        } else {
+            $("div#stockageDescription").hide('slow');
+        }
+    }
+
+    function setSubmitButton(bool) {
+        var button = "div#file_submit_button";
+        if (bool) {
+            $(button).removeClass('disabled');
+        } else {
+            $(button).addClass('disabled');
+        }
+    }
+</script>

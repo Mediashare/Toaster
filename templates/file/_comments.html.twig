@@ -1,0 +1,79 @@
+{% if app.user %}
+    <div class="ui card w-100">
+        <form id="form_comment" action="{{ path('file_comment', {'token': file.token}) }}" method="POST" class="ui form">
+            <div class="field">
+                <textarea id="comment" name="comment" required="true">Comment...</textarea>
+                <script>
+                    var editor = CodeMirror.fromTextArea(document.getElementById("comment"), {
+                        mode: {
+                            name: "gfm",
+                            tokenTypeOverrides: {
+                                emoji: "emoji"
+                            }
+                        },
+                        scrollbarStyle: "simple",
+                        lineNumbers: true,
+                        theme: "default"
+                    });
+                    editor.setSize("100%", "100%");
+                </script>
+            </div>
+        </form>
+        <div class="extra content">
+            <button type="submit" onclick="$('form#form_comment').submit();"
+                class="right floated ui icon button basic green">
+                <i class="send alternate green icon"></i> Send
+            </button>
+        </div>
+    </div>
+{% endif %}
+
+{% for comment in file.comments|reverse %}
+    <div class="ui card w-100">
+        <div class="ui comments" style="margin: 0;">
+            <div class="comment">
+                <a class="avatar" style="margin:0;">
+                    <img src="https://eu.ui-avatars.com/api/?name={{ comment.user.username }}">
+                </a>
+                <div class="content" style="padding: 0.6rem 0.6rem 0;margin-left: 2.5em;">
+                    <div class="left floated">
+                        <a class="author">{{ comment.user.username }}</a>
+                        <div class="metadata">
+                            <div class="date">{{ comment.updateDate|ago }}</div>
+                        </div>
+                    </div>
+                    <a {% if app.user %} href="{{ path('like', {'type': 'file', 'token': file.token}) }}" {% endif %}
+                        class="right floated ui icon">
+                        {% set liked = false %}
+                        {% for like in file.likes %}
+                            {% if app.user == like.user %}
+                                {% set liked = true %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if file.likes|length %}
+                            {{ file.likes|length }}
+                        {% endif %}
+                        <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider" style="margin: 0;"></div>
+        <textarea id="comment-{{ comment.id }}">{{ comment.content }}</textarea>
+        <script>
+            var editor = CodeMirror.fromTextArea(document.getElementById("comment-{{ comment.id }}"), {
+                mode: {
+                    name: "gfm",
+                    tokenTypeOverrides: {
+                        emoji: "emoji"
+                    }
+                },
+                readOnly: true,
+                scrollbarStyle: "simple",
+                lineNumbers: true,
+                theme: "default"
+            });
+            editor.setSize("100%", "100%");
+        </script>
+    </div>
+{% endfor %}

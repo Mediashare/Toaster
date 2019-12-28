@@ -1,0 +1,135 @@
+<div class="card">
+    <div class="extra content" style="padding: 0;">
+        <div class="left floated">
+            <div class="ui comments" style="margin: 0;">
+                <div class="comment">
+                    <a class="avatar" style="margin:0;width: 62px;height: 62px;">
+                        <img src="https://eu.ui-avatars.com/api/?name={{ file.user.username }}" width="100%" height="100%" style="border-radius: 0px;">
+                    </a>
+                    <div class="content" style="padding: 1rem 1.5rem;">
+                        <div class="summary">
+                            <a class="author ui black">{{ file.user.username }}</a>
+                            <div class="date">{{ file.updateDate|ago }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right floated" style="margin: 1.4rem;">
+            <a href="{{ path('file_show', {'token': file.token}) }}#comments">
+                {{ file.comments|length }}
+                <i class="comments icon"></i>
+            </a>
+        </div>
+    </div>
+    {% set image = 'image/' in file.metadata.mimeType %}
+    {% if image %}
+        <a href="{{ path('file_show', {'token': file.token}) }}" class="image">
+            <img src="{{ path('file_download', {'token': file.token}) }}" alt="" class="w-100">
+        </a>
+        <div class="ui divider" style="margin: 0;"></div>
+    {% elseif 'video/' in file.metadata.mimeType %}
+        <video width="100%" height="auto" controls>
+            <source src="{{ path('file_download', {'token': file.token}) }}" type="video/mp4">
+            <source src="{{ path('file_download', {'token': file.token}) }}" type="video/ogg">
+        </video>
+        <div class="ui divider" style="margin: 0;"></div>
+    {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
+        <div class="ui divider" style="margin: 0;"></div>
+        <div class="CodeMirror_25vh">
+            <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>
+            <script>
+                var file_editor = CodeMirror.fromTextArea(document.getElementById("file-{{ file.token }}"), {
+                    mode: {
+                        name: "gfm",
+                        tokenTypeOverrides: {
+                            emoji: "emoji"
+                        }
+                    },
+                    readOnly: true,
+                    scrollbarStyle: "null",
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    theme: "default"
+                });
+                file_editor.setSize("100%", "100%");
+            </script>
+        </div>
+    {% endif %}  
+    {% if file.description %}
+        <div class="ui divider" style="margin: 0;"></div>
+        <div class="CodeMirror_25vh">
+            <textarea id="file_description-{{ file.token }}" style="height: auto;">{{ file.description }}</textarea>
+            <script>
+                var editor = CodeMirror.fromTextArea(document.getElementById("file_description-{{ file.token }}"), {
+                    mode: {
+                        name: "gfm",
+                        tokenTypeOverrides: {
+                            emoji: "emoji"
+                        }
+                    },
+                    readOnly: true,
+                    scrollbarStyle: "null",
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    theme: "default"
+                });
+                editor.setSize("100%", "100%");
+            </script>
+        </div>
+    {% endif %}
+    <div class="content" style="word-wrap: anywhere;">
+        <div class="ui grid">
+            <div class="eight wide column">
+                <div class="ui header">
+                    <a href="{{ path('stockage_show', {'token': stockage.token}) }}">
+                        {{ stockage.name }}
+                    </a>
+                    /
+                    <a href="{{ path('file_show', {'token': file.token}) }}">
+                        {{ file.filename }}
+                    </a>
+                </div>
+                <div class="ui meta">
+                    {{ file.metadata.mimeType }}
+                </div>
+            </div>
+            <div class="eight wide column">
+                {% if app.user == file.user %}
+                    <a href="{{ path('file_remove', {'token': file.token}) }}" class="right floated ui icon button basic">
+                        <i class="trash red icon"></i>
+                    </a>
+                    <a href="{{ path('file_edit', {'token': file.token}) }}" class="right floated ui icon button basic">
+                        <i class="edit yellow icon"></i>
+                    </a>
+                {% endif %}
+                <a href="{{ path('file_show', {'token': file.token}) }}" class="right floated ui icon button basic">
+                    <i class="eye blue icon"></i>
+                </a>
+                <a download href="{{ path('file_download', {'token': file.token}) }}" class="right floated ui icon button basic">
+                    <i class="download green icon"></i>
+                </a>
+                <a href="{{ path('file_show', {'token': file.token}) }}#comments"
+                    class="right floated ui icon button basic">
+                    {% if file.comments %}
+                        {{ file.comments|length }}
+                    {% endif %}
+                    <i class="comments outline icon blue"></i>
+                </a>
+                <a {% if app.user %} href="{{ path('like', {'type': 'file', 'token': file.token}) }}" {% endif %}
+                    class="right floated ui icon button basic">
+                    {% set liked = false %}
+                    {% for like in file.likes %}
+                        {% if app.user == like.user %}
+                            {% set liked = true %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if file.likes|length %}
+                        {{ file.likes|length }}
+                    {% endif %}
+                    <i class="heart {% if not liked %}outline{% endif %} icon red"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
