@@ -42,6 +42,14 @@
     <body id="body">
         <div class="ui container">
             {% include "_menu.html.twig" %}
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="ui warning message">
+                    <div class="header">
+                        Form Error!
+                    </div>
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
             {% block content %}{% endblock %}
         </div>
 

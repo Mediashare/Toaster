@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -21,11 +22,22 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        $error = null;
+        
+        // Check if user already exist. If true return error;
+        $em = $this->getDoctrine()->getManager();
+        $user_exist = $em->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]);
+        if ($user_exist) {
+            $session = new Session();
+            $session->getFlashBag()->add('error', 'User already exist!');
+            return $this->redirectToRoute('app');
+        }
 
-        if ($form->isSubmitted()) {
+        if (!$user_exist && $form->isSubmitted()) {
             if (!$form->isValid()) {
                 return $this->redirectToRoute('app');
             }
+
             // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -34,9 +46,9 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
             // User Authentification
             $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
@@ -47,6 +59,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('_register.html.twig', [
             'registrationForm' => $form->createView(),
+            'error' => $error
         ]);
     }
 }

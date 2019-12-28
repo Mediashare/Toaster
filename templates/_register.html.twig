@@ -1,5 +1,8 @@
 {{ form_start(registrationForm, {'action': path('app_register')}) }}
     <div class="ui form">
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
         <div class="two fields">
             <div class="field ui input">
                 {{ form_widget(registrationForm.username) }}

@@ -1,6 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <div class="ui segment">
+        <h2 class="ui header">
+            <img class="ui image" src="{{ asset('images/school.png') }}">
+            <div class="content">
+              Learn More
+            </div>
+          </h2>
+        <p>
+            Toaster is a social network about file sharing. 
+            It works with a hub system that segments the different shares. <br>
+            The project aims to become a decentralized service, giving the possibility to create Toaster instances on your server while keeping the possibility to link to other connected instances.
+        </p>
+    </div>
     {% if not app.user %}
         <div class="ui placeholder segment">
             <div class="ui two column stackable center aligned grid">
