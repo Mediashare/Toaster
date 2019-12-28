@@ -1,13 +1,15 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Hub;
 use App\Entity\File;
 use Chumper\Zipper\Zipper;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HubController extends AbstractController
 {
@@ -81,8 +83,8 @@ class HubController extends AbstractController
         endif;
         // Create File
         $archive = new File();
-        $archive->addHub($hub);
-        $archive->setFilename($hub->getSlug().'-'.$archive->getToken().'.zip');
+        $archive->setHub($hub);
+        $archive->setFilename($hub->getSlug().'.zip');
         $archive->setMetadata(['extension' => 'zip', 'mimeType' => 'application/zip']);
             
         // Compress files
@@ -95,13 +97,13 @@ class HubController extends AbstractController
         $zipper->add($files);
         $zipper->close();
 
-        $checksum = $archive->setChecksum();
-        if ($checksum):
-            $em->persist($archive);
-            $em->flush();
-        endif;
-        
-        return $this->redirectToRoute('file_show', ['token' => $archive->getToken()]);
+        $response = new BinaryFileResponse($archive->getPath());
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $file->getFilename()
+        );
+        // $archive->remove();
+        return $response;
     }
 
     /**
