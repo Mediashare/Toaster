@@ -69,19 +69,20 @@ class SearchController extends AbstractController
                         ];
                     endif;
                 endif;
+                foreach ($file->getTags() as $tag) {
+                    if (\strpos(\strtolower('#'.$tag->getName()), $query) !== false):
+                        $tags[$tag->getName()] = $tag;
+                    endif;
+                }
             }
-            foreach ($file->getTags() as $tag) {
-                if (\strpos(\strtolower('#'.$tag->getName()), $query) !== false):
-                    $data['results']['Tags']['name'] = 'Tags';
-                    $data['results']['Tags']['results'][] = [
-                        'name' => 'Tags',
-                        'title' => '#'.$tag->getName(),
-                        'hub' => $hub->getName(),
-                        'file' => $file->getFilename(),
-                        'url' => $this->generateUrl('tag_show', ['slug' => $tag->getSlug()]),
-                    ];
-                endif;
-            }
+        }
+        foreach ($tags as $tag) {
+            $data['results']['Tags']['name'] = 'Tags';
+            $data['results']['Tags']['results'][] = [
+                'name' => 'Tags',
+                'title' => '#'.$tag->getName(),
+                'url' => $this->generateUrl('tag_show', ['slug' => $tag->getSlug()]),
+            ];
         }
         return new JsonResponse($data, 200);
     }
