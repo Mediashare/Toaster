@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
             $em->flush();
 
             // User Authentification
-            $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER', 'ROLE_ADMIN'));
+            $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
             $this->get('security.token_storage')->setToken($token);
 
             return $this->redirectToRoute('app');
