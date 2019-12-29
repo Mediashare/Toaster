@@ -1,10 +1,11 @@
 <div class="ui card w-100">
     {% if 'image/' in file.metadata.mimeType %}
-        <a href="{{ path('file_download', {'token': file.token}) }}" data-lightbox="image-{{file.token}}" data-title="{{file.description}}" style="height: 0px;">
+        <a href="{{ path('file_download', {'token': file.token}) }}" data-lightbox="image-{{file.token}}" data-title="{{file.description}}" style="visibility: none;height: 0px;">
             <img 
                 class="w-100" 
                 src="{{ path('file_download', {'token': file.token}) }}" 
-                alt="{{ file.tags|join(' ') }}">
+                alt="{{ file.tags|join(' ') }}"
+                style="background-color: #ebf4ff;">
         </a>
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
         <textarea id="code" name="code">{{ file.content }}</textarea>
