@@ -18,6 +18,7 @@ $(document).ready(function() {
         context: '#page'
     });
 });
+
 function copyToClipboard(input_id) {
     /* Get the text field */
     var copyText = document.getElementById(input_id);
@@ -29,6 +30,7 @@ function copyToClipboard(input_id) {
     /* Copy the text inside the text field */
     document.execCommand("copy");
 }
+
 function lazyLoad(token) {
     var top_of_element = $("#card-"+token).offset().top;
     var bottom_of_element = $("#card-"+token).offset().top + $("#card-"+token).outerHeight();
