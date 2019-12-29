@@ -1,19 +1,15 @@
-<div class="card">
+<div id="card-{{ file.token }}" class="card">
     {% set image = 'image/' in file.metadata.mimeType %}
     {% if image %}
-        <style>
-            div#file_view-{{ file.token }} {
-                background: url("{{ path('file_download', {'token': file.token}) }}") !important;
-                background-size: auto;
-                background-repeat: no-repeat;
-                background-size: 100% 100% !important;
-                height: 120px;
-            }
-        </style>
-        
-        <a href="{{ path('file_show', {'token': file.token}) }}">
-            <div id="file_view-{{ file.token }}"></div>
+        <a href="{{ path('file_show', {'token': file.token}) }}" class="image">
+            <img class="lozad-{{file.token}} w-100" style="height: 120px;" data-src="{{ path('file_download', {'token': file.token}) }}" alt="{{ file.tags|join(' ') }}">
         </a>
+        <script>
+            lazyLoad('{{ file.token }}')
+            $(window).scroll(function() {
+                lazyLoad('{{ file.token }}')
+            });
+        </script>
     {% endif %} 
     <div class="content" style="word-wrap: anywhere;">
         <a href="{{ path('file_show', {'token': file.token}) }}">

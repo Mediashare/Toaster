@@ -29,3 +29,15 @@ function copyToClipboard(input_id) {
     /* Copy the text inside the text field */
     document.execCommand("copy");
 }
+function lazyLoad(token) {
+    var top_of_element = $("#card-"+token).offset().top;
+    var bottom_of_element = $("#card-"+token).offset().top + $("#card-"+token).outerHeight();
+    var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+    var top_of_screen = $(window).scrollTop();
+
+    if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+        // the element is visible, do something
+        const observer = lozad('.lozad-'+token);
+        observer.observe();
+    }
+}

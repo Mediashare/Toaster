@@ -36,6 +36,9 @@
         <link rel="icon" href="{{ asset('images/logo.ico') }}">
         {% block stylesheets %}{% endblock %}
 
+        <!-- Lazy Loadinf -->
+        <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+        
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101987237-8"></script>
         <script>
@@ -45,6 +48,7 @@
             gtag('config', 'UA-101987237-8');
         </script>
 
+        <script src="{{ asset('js/app.js') }}"></script>
     </head>
     <body id="body">
         <div class="ui container">
@@ -60,7 +64,6 @@
             {% block content %}{% endblock %}
         </div>
 
-        <script src="{{ asset('js/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

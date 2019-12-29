@@ -1,4 +1,4 @@
-<div class="card">
+<div id="card-{{ file.token }}" class="card">
     <div class="extra content" style="padding: 0;">
         <div class="left floated">
             <div class="ui comments" style="margin: 0;">
@@ -25,8 +25,14 @@
     {% set image = 'image/' in file.metadata.mimeType %}
     {% if image %}
         <a href="{{ path('file_show', {'token': file.token}) }}" class="image">
-            <img src="{{ path('file_download', {'token': file.token}) }}" alt="" class="w-100">
+            <img class="lozad-{{file.token}} w-100" data-src="{{ path('file_download', {'token': file.token}) }}" alt="{{ file.tags|join(' ') }}">
         </a>
+        <script>
+            lazyLoad('{{ file.token }}')
+            $(window).scroll(function() {
+                lazyLoad('{{ file.token }}')
+            });
+        </script>
         <div class="ui divider" style="margin: 0;"></div>
     {% elseif 'video/' in file.metadata.mimeType %}
         <video width="100%" height="auto" controls>
