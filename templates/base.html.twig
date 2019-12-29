@@ -36,9 +36,14 @@
         <link rel="icon" href="{{ asset('images/logo.ico') }}">
         {% block stylesheets %}{% endblock %}
 
-        <!-- Lazy Loadinf -->
+        <!-- Image Lazy Loading -->
         <script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+
+        <!-- Image LightBox -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/lightbox.css') }}">
+        <script src="{{ asset('js/lightbox.js') }}"></script>
         
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101987237-8"></script>
         <script>
