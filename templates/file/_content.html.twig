@@ -1,6 +1,6 @@
 <div class="ui card w-100">
     {% if 'image/' in file.metadata.mimeType %}
-        <img style="width:100%;" src="{{ path('file_download', {'token': file.token}) }}">
+        <img style="width:100%;" src="{{ path('file_download', {'token': file.token}) }}" alt="{{ file.tags|join(' ') }}">
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
         <textarea id="code" name="code">{{ file.content }}</textarea>
         <script>
