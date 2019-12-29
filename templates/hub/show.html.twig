@@ -1,5 +1,14 @@
 {% extends "base.html.twig" %}
-{% block title %}Toaster | {{ hub.name }} / {% endblock title %}
+{% block title %}Toaster | {{ hub.name }} / {% endblock title %}
+{% block og_title %}Toaster | {{ hub.name }} / {% endblock og_title %}
+{% if hub.description %}
+    {% block description %}{{ hub.description }}{% endblock description %}
+{% endif %}
+{% if hub.tags %}
+    {% block keywords %}{% for tag in hub.tags %}{{ tag.data }},{% endfor %}{% endblock keywords %}
+{% endif %}
+
+
 {% block content %}
 {% set more_results = (hub.files|length - files|length) %}
     <h2 class="ui dividing header">

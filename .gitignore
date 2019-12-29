@@ -19,5 +19,6 @@
 ###< symfony/web-server-bundle ###
 .vscode
 
+.DS_STORE
 stockage/
 data.db

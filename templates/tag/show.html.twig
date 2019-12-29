@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Toaster | Tag / {{ tag.name }}{% endblock %}
+{% block og_title %}Toaster | Tag / {{ tag.name }}{% endblock %}
 {% block content %}
     {% for hub in hubs %}
         <h2 class="ui dividing header">

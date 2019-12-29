@@ -68,26 +68,26 @@
                     <i class="user icon"></i> Login
                 </div>
             </button>
+            {# Login Modal #}
+            <div id="login_form" class="ui modal">
+                <i class="close icon"></i>
+                <div class="header">
+                    Login
+                </div>
+                <div class="content">
+                    {{ render(controller('App\\Controller\\LoginController::login')) }}
+                </div>
+            </div>
+            {# Registration Modal #}
+            <div id="registration_form" class="ui modal">
+                <i class="close icon"></i>
+                <div class="header">
+                    Registration
+                </div>
+                <div class="content">
+                    {{ render(controller('App\\Controller\\RegistrationController::register')) }}
+                </div>
+            </div>
         {% endif %}
-    </div>
-</div>
-
-<div id="login_form" class="ui modal">
-    <i class="close icon"></i>
-    <div class="header">
-        Login
-    </div>
-    <div class="content">
-        {{ render(controller('App\\Controller\\LoginController::login')) }}
-    </div>
-</div>
-
-<div id="registration_form" class="ui modal">
-    <i class="close icon"></i>
-    <div class="header">
-        Registration
-    </div>
-    <div class="content">
-        {{ render(controller('App\\Controller\\RegistrationController::register')) }}
     </div>
 </div>

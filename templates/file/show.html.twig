@@ -1,5 +1,17 @@
 {% extends "base.html.twig" %}
-{% block title %}Toaster | {{ file.hub.name }} / {{ file.filename }}{% endblock title %}
+{% block title %}Toaster | {{ file.hub.name }} / {{ file.filename }}{% endblock title %}
+{% block og_title %}Toaster | {{ file.hub.name }} / {{ file.filename }}{% endblock og_title %}
+{% if file.description %}
+    {% block description %}{{ file.description }}{% endblock description %}
+{% endif %}
+{% if file.tags %}
+    {% block keywords %}{{ file.tags|join(', ')}}{% endblock keywords %}
+{% endif %}
+
+    {% if 'image/' in file.metadata.mimeType %}
+        {% block og_image %}{{ path('file_download', {'token': file.token}) }}{% endblock og_image %}
+    {% endif %}
+
 {% block content %}
     <h2 class="ui dividing header">
         <a href="{{ path('hub_show', {'token': file.hub.token}) }}">{{ file.hub.name }}</a>
