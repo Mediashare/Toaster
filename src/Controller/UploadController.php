@@ -17,10 +17,20 @@ class UploadController extends AbstractController
         $this->filesystem = new Filesystem();
     }
     
+    public function form() {
+        $this->em = $this->getDoctrine()->getManager();
+        $hubs = $this->em->getRepository(Hub::class)->findAll();
+        $tags = $this->em->getRepository(Tag::class)->findAll();
+        return $this->render('file/_form.html.twig', [
+            'hubs' => $hubs,
+            'tags' => $tags
+        ]);
+    }
+    
     /**
      * @Route("/upload/file", name="upload_file")
      */
-    public function form(Request $request) {
+    public function upload(Request $request) {
         $this->em = $this->getDoctrine()->getManager();
         $files = (array) $request->files->get('files');
         if ($request->isMethod('POST') && $files && count($files) > 0) {
@@ -41,13 +51,6 @@ class UploadController extends AbstractController
             }
             return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
         }
-        
-        $hubs = $this->em->getRepository(Hub::class)->findAll();
-        $tags = $this->em->getRepository(Tag::class)->findAll();
-        return $this->render('file/_form.html.twig', [
-            'hubs' => $hubs,
-            'tags' => $tags
-        ]);
     }
 
     /**
