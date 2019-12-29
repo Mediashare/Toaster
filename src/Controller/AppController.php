@@ -14,7 +14,7 @@ class AppController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-        $hubs = $em->getRepository(Hub::class)->findBy([], ['updateDate' => 'DESC']);
+        $hubs = $em->getRepository(Hub::class)->findBy([], ['updateDate' => 'DESC'], 10);
         
         return $this->render('index.html.twig', [
             'hubs' => $hubs
