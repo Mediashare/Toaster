@@ -1,14 +1,15 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Hub;
 use App\Entity\Tag;
 use App\Entity\File;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UploadController extends AbstractController
 {
@@ -51,6 +52,10 @@ class UploadController extends AbstractController
             }
             return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
         }
+        
+        $session = new Session();
+        $session->getFlashBag()->add('error', 'Upload form have problem.');
+        return $this->redirectToRoute('app');
     }
 
     /**
