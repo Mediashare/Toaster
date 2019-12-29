@@ -21,11 +21,15 @@ class RegistrationFormType extends AbstractType
             ->add('username', TextType::class, [
                 'attr' => [
                     'class' => 'ui input',
-                    'placeholder' => 'Username'
+                    'placeholder' => 'Username',
+                    'required' => true
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'attr' => [
+                    'required' => true
+                ],
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -35,7 +39,8 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', PasswordType::class, [
                 'attr' => [
                     'placeholder' => 'Password',
-                    'minlength' => 6
+                    'minlength' => 6,
+                    'required' => true
                 ],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

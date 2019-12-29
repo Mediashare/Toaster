@@ -14,27 +14,6 @@
             The project aims to become a decentralized service, giving the possibility to create Toaster instances on your server while keeping the possibility to link to other connected instances.
         </p>
     </div>
-    {% if not app.user %}
-        <div class="ui placeholder segment">
-            <div class="ui two column stackable center aligned grid">
-                <div class="ui vertical divider">Or</div>
-                <div class="middle aligned row">
-                    <div class="column">
-                        <div class="ui header">
-                            Login
-                        </div>
-                        {{ render(controller('App\\Controller\\LoginController::login')) }}
-                    </div>
-                    <div class="column">
-                        <div class="ui header">
-                            Registration
-                        </div>
-                        {{ render(controller('App\\Controller\\RegistrationController::register')) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
     {% for hub in hubs %}
         <h2 class="ui dividing header">
             <a href="{{ path('hub_show', {'token': hub.token}) }}">
