@@ -1,6 +1,7 @@
 /** Global **/
 .w-100 {width: 100%!important;}
 .margin {margin: 0.2rem!important;}
+.hidden {display: none!important;}
 /** Menu **/
 .menu {z-index: 900!important;}
 /** Form **/

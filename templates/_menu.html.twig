@@ -23,7 +23,8 @@
                     </a>
                 </div>
             </div>
-            <button onclick="$('#send_files.ui.modal').modal('show');" class="item ui button">
+            <button id="button_files_modal" onclick="$('#send_files.ui.modal').modal('show');" class="item ui button">
+                <div id="files_modal_loading" class="small ui active inline loader hidden"></div>
                 <div class="ui positive right labeled icon">
                     <i class="upload icon"></i> Send File(s)
                 </div>
@@ -48,7 +49,7 @@
                     <div class="ui red deny button">
                         Nope
                     </div>
-                    <div id="file_submit_button" type="button" onclick="$('form#file_submit').submit();" class="ui positive right labeled icon button disabled">
+                    <div id="file_submit_button" type="button" onclick="submitFiles();" class="ui positive right labeled icon button disabled">
                         Send
                         <i class="upload icon"></i>
                     </div>

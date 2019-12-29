@@ -129,4 +129,10 @@
             $(button).addClass('disabled');
         }
     }
+
+    function submitFiles() {
+        $('button#button_files_modal').addClass('disabled');
+        $('div#files_modal_loading').removeClass('hidden');
+        $('form#file_submit').submit();
+    }
 </script>
