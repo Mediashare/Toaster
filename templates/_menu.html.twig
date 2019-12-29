@@ -3,9 +3,6 @@
     <a href="{{ path('hub') }}" class="item">Hubs</a>
     <a href="{{ path('tag') }}" class="item">Tags</a>
     <div class="right menu">
-        <a id="button_search" onclick="searchBar();" class="item" data-search-enable="false">
-            <i class="search icon"></i>
-        </a>
         {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
         {# {% if app.request.get('_route') == 'hub_show' %}
             <div class="item">

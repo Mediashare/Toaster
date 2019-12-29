@@ -1,3 +1,6 @@
+<a id="button_search" onclick="searchBar();" class="item" data-search-enable="false">
+    <i class="search icon"></i>
+</a>
 <div id="searchBar" style="display: none;">
     <div class="ui search" style="height: 100%;">
         <input class="prompt" type="text" style="border-radius: 0;height: 100%;" placeholder="Search file...">
@@ -15,9 +18,9 @@
             url: '{{ url }}?query={query}'
         },
         fields: {
-            results : 'results',
-            title   : 'title',
-            url     : 'url'
+            results     : 'results',
+            title       : 'title',
+            url         : 'url',
         },
         type: 'category'
     });

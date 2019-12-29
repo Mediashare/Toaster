@@ -38,9 +38,9 @@ class SearchController extends AbstractController
         $hubs = $em->getRepository(Hub::class)->findBy([], ['updateDate' => 'DESC']);
         foreach ($hubs as $hub) {
             if (\strpos(\strtolower($hub->getName()), $query) !== false):
-                $data['results']['Hub']['name'] = 'Hub';
-                $data['results']['Hub']['results'][] = [
-                    'name' => 'Hub',
+                $data['results']['Hubs']['name'] = 'Hubs';
+                $data['results']['Hubs']['results'][] = [
+                    'name' => 'Hubs',
                     'title' => $hub->getName(),
                     'url' => $this->generateUrl('hub_show', ['token' => $hub->getToken()]),
                 ];
@@ -48,12 +48,26 @@ class SearchController extends AbstractController
             foreach ($hub->getFiles() as $file) {
                 if (\strpos(\strtolower($file->getFilename()), $query) !== false):
                     $data['results']['Files']['name'] = 'Files';
-                    $data['results']['Files']['results'][] = [
-                        'name' => 'Files',
-                        'title' => $file->getFilename(),
-                        'hub' => $hub->getName(),
-                        'url' => $this->generateUrl('file_show', ['token' => $file->getToken()]),
-                    ];
+                    if (\strpos($file->getMetadata()['mimeType'], 'image/') !== false):
+                        // With Image
+                        $data['results']['Files']['results'][] = [
+                            'name' => 'Files',
+                            'title' =>  $file->getHub()->getName().' / '.$file->getFilename(),
+                            'description' => $file->getDescription(),
+                            'hub' => $hub->getName(),
+                            'url' => $this->generateUrl('file_show', ['token' => $file->getToken()]),
+                            'image' => $this->generateUrl('file_download', ['token' => $file->getToken()]),
+                        ];
+                    else:
+                        // Without Image
+                        $data['results']['Files']['results'][] = [
+                            'name' => 'Files',
+                            'title' =>  $file->getHub()->getName().' / '.$file->getFilename(),
+                            'description' => $file->getDescription(),
+                            'hub' => $hub->getName(),
+                            'url' => $this->generateUrl('file_show', ['token' => $file->getToken()]),
+                        ];
+                    endif;
                 endif;
             }
             foreach ($file->getTags() as $tag) {
