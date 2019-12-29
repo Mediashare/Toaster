@@ -9,9 +9,9 @@
     </div>
     <div class="thirteen wide column">
         <h2 class="ui dividing header">{{ user.username }} / </h2>
-        {% if user.files|length %}
+        {% if files|length %}
             <div class="ui one cards">
-                {% for file in user.files|reverse %}
+                {% for file in files %}
                     {% set hub = file.hub %}
                     {% include "file/_card.html.twig" %}
                 {% endfor %}

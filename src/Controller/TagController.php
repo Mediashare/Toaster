@@ -16,7 +16,7 @@ class TagController extends AbstractController
     public function index()
     {
         $em = $this->getDoctrine()->getManager();
-        $tags = $em->getRepository(Tag::class)->search();
+        $tags = $em->getRepository(Tag::class)->findBy([], ['updateDate' => 'DESC']);
 
         return $this->render('tag/index.html.twig', [
             'tags' => $tags
@@ -28,22 +28,9 @@ class TagController extends AbstractController
     public function show(string $slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $tags = $em->getRepository(Tag::class)->search($slug);
-        
-        $hubs = [];
-        foreach ($tags as $tag) {
-            $files = $em->getRepository(File::class)->findByTag($tag);
-            foreach ($files as $file) {
-                $hub = $file->getHub();
-                $hubs[$hub->getToken()]['token'] = $hub->getToken();
-                $hubs[$hub->getToken()]['name'] = $hub->getName();
-                $hubs[$hub->getToken()]['files'][] = $file;
-                
-            }
-        }
+        $tag = $em->getRepository(Tag::class)->findOneBy(['slug' => $slug], ['updateDate' => 'DESC']);
         return $this->render('tag/show.html.twig', [
             'tag' => $tag,
-            'hubs' => $hubs,
         ]);
     }
 }

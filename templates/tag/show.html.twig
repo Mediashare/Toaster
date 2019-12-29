@@ -2,16 +2,13 @@
 {% block title %}Toaster | Tag / {{ tag.name }}{% endblock %}
 {% block og_title %}Toaster | Tag / {{ tag.name }}{% endblock %}
 {% block content %}
-    {% for hub in hubs %}
         <h2 class="ui dividing header">
-            <a href="{{ path('hub_show', {'token': hub.token}) }}">{{ hub.name }}</a>
-            / 
             <a href="{{ path('tag_show', {'slug': tag.slug}) }}">#{{ tag.name }}</a>
         </h2>
-        {% if hub.files|length %}
-            <div class="ui one cards">
-                {% for file in hub.files|reverse %}
-                    {% include "file/_card.html.twig" %}
+        {% if tag.files|length %}
+            <div class="ui four cards">
+                {% for file in tag.files|reverse %}
+                    {% include "file/_card_min.html.twig" %}
                 {% endfor %}
             </div>
         {% else %}
@@ -19,5 +16,4 @@
                 File(s) is not found.
             </p>
         {% endif %}
-    {% endfor %}
 {% endblock %}

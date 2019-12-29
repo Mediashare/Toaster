@@ -32,11 +32,15 @@ class LikeController extends AbstractController
             $like = new Like();
             $like->setUser($this->getUser());
             $result['entity']->addLike($like);
+            // UpdateDate entity
+            $result['entity']->setUpdateDate(new \DateTime());
         endif;
-
+        
+        
+        // Records
         $em = $this->getDoctrine()->getManager();
         $em->persist($like);
-        // $em->persist($result['entity']);
+        $em->persist($result['entity']);
         $em->flush();
 
         return $this->redirectToRoute($result['route'], $result['parameters']);

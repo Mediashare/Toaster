@@ -25,7 +25,7 @@
     {% set image = 'image/' in file.metadata.mimeType %}
     {% if image %}
         <a href="{{ path('file_show', {'token': file.token}) }}" class="image">
-            <img class="lozad-{{file.token}} w-100" data-src="{{ path('file_download', {'token': file.token}) }}" alt="{{ file.tags|join(' ') }}">
+            <img class="lozad-{{file.token}} w-100" data-src="{{ path('file_download', {'token': file.token}) }}" alt="{{ file.tags|join(' ') }}" style="max-height: 33vh;">
         </a>
         <script>
             lazyLoad('{{ file.token }}')
@@ -90,8 +90,8 @@
         <div class="ui grid">
             <div class="eight wide column">
                 <div class="ui header">
-                    <a href="{{ path('hub_show', {'token': hub.token}) }}">
-                        {{ hub.name }}
+                    <a href="{{ path('hub_show', {'token': file.hub.token}) }}">
+                        {{ file.hub.name }}
                     </a>
                     /
                     <a href="{{ path('file_show', {'token': file.token}) }}">

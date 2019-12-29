@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Hub;
 use App\Entity\File;
+use App\Entity\Like;
 use App\Entity\User;
 use App\Entity\Comment;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,9 +23,12 @@ class ProfileController extends AbstractController
         else:
             $user = $this->getUser();
         endif;
+
+        $files = $em->getRepository(File::class)->findBy(['user' => $user], ['updateDate' => 'DESC']);
         
         return $this->render('profile/index.html.twig', [
             'user' => $user,
+            'files' => $files,
         ]);
     }
 
@@ -40,9 +44,11 @@ class ProfileController extends AbstractController
             $user = $this->getUser();
         endif;
         
+        $hubs = $em->getRepository(Hub::class)->findBy(['user' => $user], ['updateDate' => 'DESC']);
+
         return $this->render('profile/hubs.html.twig', [
             'user' => $user,
-            'hubs' => $user->getHubs(),
+            'hubs' => $hubs,
         ]);
     }
 
@@ -57,10 +63,11 @@ class ProfileController extends AbstractController
         else:
             $user = $this->getUser();
         endif;
+        $files = $em->getRepository(File::class)->findBy(['user' => $user], ['updateDate' => 'DESC']);
         
         return $this->render('profile/files.html.twig', [
             'user' => $user,
-            'files' => $user->getFiles(),
+            'files' => $files,
         ]);
     }
 
@@ -78,7 +85,9 @@ class ProfileController extends AbstractController
         $hubs = [];
         $files = [];
         $comments = [];
-        foreach ($user->getLikes() as $like) {
+        
+        $likes = $em->getRepository(Like::class)->findBy(['user' => $user], ['createDate' => 'DESC']);
+        foreach ($likes as $like) {
             if ($type === "hub" && $like->getHub()):
                 $hub = $em->getRepository(Hub::class)->findOneBy(['id' => $like->getHub()->getId()]);
                 if ($hub):

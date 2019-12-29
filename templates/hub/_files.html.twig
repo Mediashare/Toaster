@@ -1,0 +1,9 @@
+{% if files|length %}
+    <div class="ui four cards">
+        {% for file in files|slice(0, 4) %}
+            {% include "file/_card_min.html.twig" %}
+        {% endfor %}
+    </div>
+{% else %}
+    <p>File(s) is not found.</p>
+{% endif %}

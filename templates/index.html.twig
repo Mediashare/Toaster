@@ -21,14 +21,6 @@
             </a>
             /
         </h2>
-        {% if hub.files|length %}
-            <div class="ui four cards">
-                {% for file in hub.files|reverse|slice(0, 4) %}
-                    {% include "file/_card_min.html.twig" %}
-                {% endfor %}
-            </div>
-        {% else %}
-            <p>File(s) is not found.</p>
-        {% endif %}
+        {{ render(controller('App\\Controller\\HubController::getLastFiles', {'hub': hub})) }}
     {% endfor %}
 {% endblock %}

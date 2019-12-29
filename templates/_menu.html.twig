@@ -1,7 +1,7 @@
 <div class="ui menu sticky_menu">
-    <a href="{{ path('app') }}" class="header item">Toaster</a>
-    <a href="{{ path('hub') }}" class="item">Hubs</a>
-    <a href="{{ path('tag') }}" class="item">Tags</a>
+    <a href="{{ path('app') }}" class="header item {% if app.request.get('_route') == 'app' %}active{% endif %}">Toaster</a>
+    <a href="{{ path('hub') }}" class="item {% if app.request.get('_route') starts with 'hub' %}active{% endif %}">Hubs</a>
+    <a href="{{ path('tag') }}" class="item {% if app.request.get('_route') starts with 'tag' %}active{% endif %}">Tags</a>
     <div class="right menu">
         {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
         {# {% if app.request.get('_route') == 'hub_show' %}
@@ -14,7 +14,7 @@
             </div>
         {% endif %} #}
         {% if app.user %}
-            <div class="ui dropdown item">
+            <div class="ui dropdown item {% if app.request.get('_route') starts with 'profile' %}active{% endif %}">
                 <i class="user icon"></i> {{ app.user.username }} <i class="dropdown icon"></i>
                 <div class="menu">
                     <a href="{{ path('profile') }}" class="item">Profile</a>
