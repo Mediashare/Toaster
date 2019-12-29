@@ -129,7 +129,6 @@ class HubController extends AbstractController
         return $this->redirectToRoute('app');
     }
 
-
     /**
      * Get last files
      *
@@ -139,7 +138,7 @@ class HubController extends AbstractController
     public function getLastFiles(Hub $hub) {
         $em = $this->getDoctrine()->getManager();
         $files = $em->getRepository(File::class)->findBy(['hub' => $hub], ['updateDate' => 'DESC']);
-        return $this->render('hub/_files.html.twig', [
+        return $this->render('file/_files.html.twig', [
             'files' => $files
         ]);
     }

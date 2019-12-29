@@ -29,8 +29,19 @@ class TagController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $tag = $em->getRepository(Tag::class)->findOneBy(['slug' => $slug], ['updateDate' => 'DESC']);
+        $files = $em->getRepository(File::class)->findByTag($tag);
         return $this->render('tag/show.html.twig', [
             'tag' => $tag,
+            'files' => $files,
+        ]);
+    }
+
+
+    public function getLastFiles(Tag $tag) {
+        $em = $this->getDoctrine()->getManager();
+        $files = $em->getRepository(File::class)->findByTag($tag);
+        return $this->render('file/_files.html.twig', [
+            'files' => $files
         ]);
     }
 }

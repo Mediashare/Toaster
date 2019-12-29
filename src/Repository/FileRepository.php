@@ -28,7 +28,6 @@ class FileRepository extends ServiceEntityRepository
         $results = $this->createQueryBuilder('f')
             ->andWhere(':tag MEMBER OF f.tags')
             ->setParameter('tag', $tag)
-            ->orderBy('f.likes', 'DESC')
             ->orderBy('f.updateDate', 'DESC')
             ->getQuery()
             ->getResult()

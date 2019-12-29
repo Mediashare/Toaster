@@ -5,9 +5,9 @@
         <h2 class="ui dividing header">
             <a href="{{ path('tag_show', {'slug': tag.slug}) }}">#{{ tag.name }}</a>
         </h2>
-        {% if tag.files|length %}
+        {% if files|length %}
             <div class="ui four cards">
-                {% for file in tag.files|reverse %}
+                {% for file in files %}
                     {% include "file/_card_min.html.twig" %}
                 {% endfor %}
             </div>
