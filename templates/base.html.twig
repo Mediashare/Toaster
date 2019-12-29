@@ -10,7 +10,8 @@
         {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
         <meta property="og:url" content="{{ currentPath }}" />
         <meta property="og:image" content="{% block og_image %}{{ asset('images/logo.png') }}{% endblock og_image %}" />
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         {# Semantic #}
         <link rel="stylesheet" type="text/css" href="{{ asset('semantic/semantic.min.css') }}">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
