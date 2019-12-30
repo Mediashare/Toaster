@@ -92,7 +92,7 @@ class HubController extends AbstractController
             $files[] = $this->getParameter('stockage').'/'.$file->getPath();
         }
         $zipper = new Zipper();
-        $zipPath = $hub->getPath().'/'.$hub->getToken().'.zip';
+        $zipPath = $this->getParameter('stockage').'/'.$hub->getPath().'/'.$hub->getToken().'.zip';
         $zipper->make($zipPath);
         $zipper->add($files);
         $zipper->close();
