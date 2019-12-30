@@ -86,7 +86,7 @@
     {% endif %}
     <div class="content" style="word-wrap: anywhere;">
         <div class="ui grid">
-            <div class="sixteen wide column">
+            <div class="sixteen wide column" style="padding-bottom: 0;">
                 <div class="ui header">
                     <a href="{{ path('hub_show', {'token': file.hub.token}) }}">
                         {{ file.hub.name }}
@@ -97,7 +97,7 @@
                     </a>
                 </div>
             </div>
-            <div class="eight wide column" style="padding-top: 0;">
+            <div class="eight wide column">
                 <div class="ui meta">
                     {{ file.metadata.mimeType }}
                 </div>
