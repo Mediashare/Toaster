@@ -184,9 +184,9 @@ class File
         }
     }
 
-    public function getContent(): ?string
+    public function getContent(string $stockage): ?string
     {
-        $content = file_get_contents($this->getPath());
+        $content = file_get_contents($stockage.'/'.$this->getPath());
         return $content;
     }
 
@@ -195,9 +195,9 @@ class File
         return $this->checksum;
     }
 
-    public function setChecksum()
+    public function setChecksum(string $filePath)
     {
-        $checksum = \md5_file($this->getPath());
+        $checksum = \md5_file($filePath);
         if (!$this->getHub()->checksum($checksum)):
             $this->checksum = $checksum;
             return $this;

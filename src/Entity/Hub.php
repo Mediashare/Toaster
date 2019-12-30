@@ -118,9 +118,9 @@ class Hub
         return rtrim($this->path, '/');
     }
 
-    public function setPath(string $path): self
+    public function setPath(): self
     {
-        $this->path = rtrim($path, '/') . '/' . $this->getSlug().'_'.$this->getToken();
+        $this->path = $this->getSlug().'_'.$this->getToken();
 
         return $this;
     }
@@ -149,12 +149,12 @@ class Hub
         return $this;
     }
 
-    public function getSize() {
+    public function getSize(string $stockage) {
         $bytes = 0;
         $files = $this->getFiles();
         foreach ($files as $file) {
-            if (file_exists($file->getPath())):
-                $bytes += filesize($file->getPath());
+            if (file_exists($stockage.'/'.$file->getPath())):
+                $bytes += filesize($stockage.'/'.$file->getPath());
             endif;
         }
         

@@ -10,7 +10,7 @@
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
         {# if file size < 1Mb #}
         {% if file.size(false) < 1000000 %} 
-            <textarea id="code" name="code">{{ file.content }}</textarea>
+            <textarea id="code" name="code">{{ file.content(stockage) }}</textarea>
             <script>
                 var editor2 = CodeMirror.fromTextArea(document.getElementById("code"), {
                     extraKeys: {"Ctrl-Space": "autocomplete"},

@@ -62,7 +62,7 @@ class FileController extends AbstractController
     public function download(string $token) {
         $em = $this->getDoctrine()->getManager();
         $file = $em->getRepository(File::class)->findOneBy(['token' => $token]);
-        $response = new BinaryFileResponse($file->getPath());
+        $response = new BinaryFileResponse($this->getParameter('stockage').'/'.$file->getPath());
         $response->setContentDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $file->getFilename()
