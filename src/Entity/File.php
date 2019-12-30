@@ -168,10 +168,10 @@ class File
         return $filepath;
     }
 
-    public function getSize(bool $converted = true): ?string
+    public function getSize(bool $converted = true, string $stockage): ?string
     {
-        if (file_exists($this->getPath())) {
-            $bytes = filesize($this->getPath());
+        if (file_exists($stockage.'/'.$this->getPath())) {
+            $bytes = filesize($stockage.'/'.$this->getPath());
             if ($converted === false):
                 return $bytes;
             endif;

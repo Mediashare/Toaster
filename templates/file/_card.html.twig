@@ -39,7 +39,7 @@
             <source src="{{ path('file_download', {'token': file.token}) }}" type="video/ogg">
         </video>
     {% elseif 'text/' in file.metadata.mimeType %}
-        {% if file and file.size(false) < 1000000 %}
+        {% if file and file.size(false, stockage) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
             <div class="CodeMirror_25vh">
                 <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>
@@ -102,7 +102,7 @@
                     {{ file.metadata.mimeType }}
                 </div>
                 <div class="ui meta">
-                    {{ file.size }}
+                    {{ file.size(true, stockage) }}
                 </div>
             </div>
             <div class="eight wide column">
