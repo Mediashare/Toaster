@@ -7,10 +7,9 @@
 {% if file.tags %}
     {% block keywords %}{{ file.tags|join(', ')}}{% endblock keywords %}
 {% endif %}
-
-    {% if 'image/' in file.metadata.mimeType %}
-        {% block og_image %}{{ path('file_download', {'token': file.token}) }}{% endblock og_image %}
-    {% endif %}
+{% if 'image/' in file.metadata.mimeType %}
+    {% block og_image %}{{ path('file_download', {'token': file.token}) }}{% endblock og_image %}
+{% endif %}
 
 {% block content %}
     <h2 class="ui dividing header">
@@ -19,17 +18,13 @@
     </h2>
     <div id="page" class="ui grid">
         <div class="ten wide column">
+            {% if file.description %}
+                {% include "file/_description.html.twig" %}
+            {% endif %}
             {% include "file/_content.html.twig" %}
         </div>
         <div class="six wide column">
             <div class="ui sticky sticky_page">
-                {% if file.description %}
-                    <h3 class="ui dividing header">
-                        Description
-                    </h3>
-                    {% include "file/_description.html.twig" %}
-                {% endif %}
-
                 {% include "file/_actions.html.twig" %}
                 
                 <h3 class="ui dividing header">
