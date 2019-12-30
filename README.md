@@ -14,6 +14,10 @@ composer install
 bin/console doctrine:database:create
 bin/console doctrine:schema:update --force
 ```
+### .env
+```bash
+composer dump-env prod
+```
 ### php.ini
 ```ini
 post_max_size = 10000M
