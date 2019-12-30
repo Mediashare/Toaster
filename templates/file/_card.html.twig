@@ -41,7 +41,7 @@
         </video>
         <div class="ui divider" style="margin: 0;"></div>
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
-        {% if file %}
+        {% if file and file.size(false) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
             <div class="CodeMirror_25vh">
                 <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>

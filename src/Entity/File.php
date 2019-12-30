@@ -173,10 +173,13 @@ class File
         return $filepath;
     }
 
-    public function getSize(): ?string
+    public function getSize(bool $converted = true): ?string
     {
         if (file_exists($this->getPath())) {
             $bytes = filesize($this->getPath());
+            if ($converted === false):
+                return $bytes;
+            endif;
             $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
             $factor = floor((strlen($bytes) - 1) / 3);
             if ($factor > 3):$decimals = 2;else:$decimals = 0;endif;

@@ -8,16 +8,20 @@
                 style="background-color: #ebf4ff;">
         </a>
     {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
-        <textarea id="code" name="code">{{ file.content }}</textarea>
-        <script>
-            var editor2 = CodeMirror.fromTextArea(document.getElementById("code"), {
-                extraKeys: {"Ctrl-Space": "autocomplete"},
-                lineNumbers: true,
-                lineWrapping: true,
-                readOnly: true,
-                mode: "{{ file.metadata.mimeType }}",
-            })
-        </script>
+        {# if file size < 1Mb #}
+        {% if file.size(false) < 1000000 %} 
+            <textarea id="code" name="code">{{ file.content }}</textarea>
+            <script>
+                var editor2 = CodeMirror.fromTextArea(document.getElementById("code"), {
+                    extraKeys: {"Ctrl-Space": "autocomplete"},
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    readOnly: true,
+                    mode: "{{ file.metadata.mimeType }}",
+                })
+            </script>
+        {% endif %}
+        
     {% elseif 'video/' in file.metadata.mimeType %}
         <video width="100%" height="50%" controls>
             <source src="{{ path('file_download', {'token': file.token}) }}" type="video/mp4">
