@@ -34,6 +34,9 @@ class LikeController extends AbstractController
             $result['entity']->addLike($like);
             // UpdateDate entity
             $result['entity']->setUpdateDate(new \DateTime());
+            if ($type === "file"):
+                $result['entity']->getHub()->setUpdateDate(new \DateTime());
+            endif;
         endif;
         
         
