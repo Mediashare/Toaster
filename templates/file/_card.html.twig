@@ -40,7 +40,7 @@
             <source src="{{ path('file_download', {'token': file.token}) }}" type="video/ogg">
         </video>
         <div class="ui divider" style="margin: 0;"></div>
-    {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
+    {% elseif 'text/' in file.metadata.mimeType %}
         {% if file and file.size(false) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
             <div class="CodeMirror_25vh">
