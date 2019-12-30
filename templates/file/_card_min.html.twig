@@ -22,6 +22,11 @@
         </a>
     </div>
     <div class="extra content">
+        <div class="left floated" style="margin: 0.5rem;">
+            <a href="{{ path('profile', {'token': file.user.token}) }}">
+                <i class="user outline icon"></i><strong>{{ file.user.username }}</strong>
+            </a>
+        </div>
         <div class="right floated ui buttons">
             <a href="{{ path('file_show', {'token': file.token}) }}#comments"
                 class="right floated ui icon button basic">

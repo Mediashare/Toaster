@@ -33,13 +33,11 @@
                 lazyLoad('{{ file.token }}')
             });
         </script>
-        <div class="ui divider" style="margin: 0;"></div>
     {% elseif 'video/' in file.metadata.mimeType %}
         <video width="100%" height="auto" controls>
             <source src="{{ path('file_download', {'token': file.token}) }}" type="video/mp4">
             <source src="{{ path('file_download', {'token': file.token}) }}" type="video/ogg">
         </video>
-        <div class="ui divider" style="margin: 0;"></div>
     {% elseif 'text/' in file.metadata.mimeType %}
         {% if file and file.size(false) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
@@ -88,7 +86,7 @@
     {% endif %}
     <div class="content" style="word-wrap: anywhere;">
         <div class="ui grid">
-            <div class="eight wide column">
+            <div class="sixteen wide column">
                 <div class="ui header">
                     <a href="{{ path('hub_show', {'token': file.hub.token}) }}">
                         {{ file.hub.name }}
@@ -98,8 +96,13 @@
                         {{ file.filename }}
                     </a>
                 </div>
+            </div>
+            <div class="eight wide column" style="padding-top: 0;">
                 <div class="ui meta">
                     {{ file.metadata.mimeType }}
+                </div>
+                <div class="ui meta">
+                    {{ file.size }}
                 </div>
             </div>
             <div class="eight wide column">
