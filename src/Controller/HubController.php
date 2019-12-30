@@ -89,7 +89,6 @@ class HubController extends AbstractController
             
         // Compress files
         foreach ($hub->getFiles() as $file) {
-            dd($this->getParameter('stockage').'/'.$file->getPath());
             $files[] = $this->getParameter('stockage').'/'.$file->getPath();
         }
         $zipper = new Zipper();
