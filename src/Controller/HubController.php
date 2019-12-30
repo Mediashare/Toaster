@@ -122,7 +122,7 @@ class HubController extends AbstractController
             $em->remove($file);
             $em->flush();
         }
-        $hub->remove();
+        $hub->remove($this->getParameter('stockage'));
         $em->remove($hub);
         $em->flush();
         

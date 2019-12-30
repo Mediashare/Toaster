@@ -89,6 +89,7 @@ class UploadController extends AbstractController
             if (!$hub):
                 $hub = new Hub();
                 $hub->setName($name);
+                $hub->setPath();
                 if ($this->getUser()):
                     $hub->setUser($this->getUser());
                 endif;
@@ -137,7 +138,7 @@ class UploadController extends AbstractController
             $this->filesystem->copy($file_data['filepath'], $filePath);
 
             // Check duplicata
-            $checksum = $file->setChecksum($filePath);
+            $checksum = $file->setChecksum($this->getParameter('stockage'));
             if ($checksum):
                 // Record file
                 $this->em->persist($file);

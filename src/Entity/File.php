@@ -195,21 +195,21 @@ class File
         return $this->checksum;
     }
 
-    public function setChecksum(string $filePath)
+    public function setChecksum(string $stockage)
     {
-        $checksum = \md5_file($filePath);
+        $checksum = \md5_file($stockage.'/'.$this->getPath());
         if (!$this->getHub()->checksum($checksum)):
             $this->checksum = $checksum;
             return $this;
         else:
-            $this->remove();
+            $this->remove($stockage);
             return false;
         endif;
     }
 
-    public function remove() {
+    public function remove(string $stockage) {
         $filesystem = new Filesystem();
-        $filesystem->remove($this->getPath());
+        $filesystem->remove($stockage.'/'.$this->getPath());
         return true;
     }
 

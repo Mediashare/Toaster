@@ -299,7 +299,6 @@ class Hub
     public function removeFile(File $file): self
     {
         if ($this->files->contains($file)) {
-            $file->remove();
             $this->files->removeElement($file);
             // set the owning side to null (unless already changed)
             if ($file->getHub() === $this) {
@@ -310,9 +309,9 @@ class Hub
         return $this;
     }
 
-    public function remove() {
+    public function remove(string $stockage) {
         $filesystem = new Filesystem();
-        $filesystem->remove($this->getPath());
+        $filesystem->remove($stockage.'/'.$this->getPath());
         return true;
     }
 }
