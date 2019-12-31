@@ -40,7 +40,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="user")
      */
-    private $files;
+    public $files;
 
     /**
      * @ORM\Column(type="datetime")
@@ -60,17 +60,17 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hub", mappedBy="user", orphanRemoval=true)
      */
-    private $hubs;
+    public $hubs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
-    private $comments;
+    public $comments;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Like", mappedBy="user", orphanRemoval=true)
      */
-    private $likes;
+    public $likes;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -165,7 +165,7 @@ class User implements UserInterface
     /**
      * @return Collection|File[]
      */
-    public function getFiles(): Collection
+    public function getFiles(): ?Collection
     {
         return $this->files;
     }
@@ -240,7 +240,7 @@ class User implements UserInterface
     /**
      * @return Collection|Hub[]
      */
-    public function getHubs(): Collection
+    public function getHubs(): ?Collection
     {
         return $this->hubs;
     }
@@ -271,7 +271,7 @@ class User implements UserInterface
     /**
      * @return Collection|Comment[]
      */
-    public function getComments(): Collection
+    public function getComments(): ?Collection
     {
         return $this->comments;
     }
@@ -302,7 +302,7 @@ class User implements UserInterface
     /**
      * @return Collection|Like[]
      */
-    public function getLikes(): Collection
+    public function getLikes(): ?Collection
     {
         return $this->likes;
     }
