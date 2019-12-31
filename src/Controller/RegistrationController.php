@@ -47,11 +47,22 @@ class RegistrationController extends AbstractController
             );
 
             $em = $this->getDoctrine()->getManager();
+            
+            // If first user = admin
+            $users = $em->getRepository(User::class)->findAll();
+            if (count($users) < 1):
+                $roles = ['ROLE_USER', 'ROLE_ADMIN'];
+                $user->setRoles($roles);
+            else:
+                $roles = ['ROLE_USER'];
+                $user->setRoles($roles);
+            endif;
+            
             $em->persist($user);
             $em->flush();
 
             // User Authentification
-            $token = new UsernamePasswordToken($user, null, 'main', array('ROLE_USER'));
+            $token = new UsernamePasswordToken($user, null, 'main', $roles);
             $this->get('security.token_storage')->setToken($token);
 
             return $this->redirectToRoute('app');

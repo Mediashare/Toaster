@@ -29,8 +29,8 @@ class FileController extends AbstractController
      */
     public function edit(Request $request, string $token) {
         $em = $this->getDoctrine()->getManager();
-        $file = $em->getRepository(File::class)->findOneBy(['token' => $token]);
-        if (!$file || $this->getUser() != $file->getUser()):
+        $file = $em->getRepository(File::class)->findOneBy(['token' => $token, 'user' => $this->getUser()]);
+        if (!$file):
             return $this->redirectToRoute('app');
         endif;
         
@@ -75,8 +75,8 @@ class FileController extends AbstractController
      */
     public function remove(string $token) {
         $em = $this->getDoctrine()->getManager();
-        $file = $em->getRepository(File::class)->findOneBy(['token' => $token]);
-        if (!$file || $this->getUser() != $file->getUser()):
+        $file = $em->getRepository(File::class)->findOneBy(['token' => $token, 'user' => $this->getUser()]);
+        if (!$file):
             return $this->redirectToRoute('app');
         endif;
         $file->remove($this->getParameter('stockage'));

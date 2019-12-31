@@ -47,10 +47,9 @@ class HubController extends AbstractController
     public function edit(Request $request, string $token)
     {
         $em = $this->getDoctrine()->getManager();
-        $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
-        $files = $em->getRepository(File::class)->findBy(['hub' => $hub], ['updateDate' => 'DESC']);
+        $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token, 'user' => $this->getUser()], ['updateDate' => 'DESC']);
         
-        if (!$hub || $this->getUser() != $hub->getUser()):
+        if (!$hub):
             return $this->redirectToRoute('app');
         endif;
         
@@ -66,14 +65,13 @@ class HubController extends AbstractController
 
         return $this->render('hub/edit.html.twig', [
             'hub' => $hub,
-            'files' => $files
         ]);
     }
 
     /**
-     * @Route("/archive/hub/{token}", name="hub_archive")
+     * @Route("/download/hub/{token}", name="hub_download")
      */
-    public function archive(string $token)
+    public function download(string $token)
     {
         $em = $this->getDoctrine()->getManager();
         $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
@@ -112,8 +110,8 @@ class HubController extends AbstractController
     public function remove(string $token)
     {
         $em = $this->getDoctrine()->getManager();
-        $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
-        if (!$hub || $this->getUser() != $hub->getUser()):
+        $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token, 'user' => $this->getUser()], ['updateDate' => 'DESC']);
+        if (!$hub):
             return $this->redirectToRoute('app');
         endif;
 
