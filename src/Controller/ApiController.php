@@ -15,6 +15,14 @@ use Symfony\Component\Serializer\Serializer;
 
 class ApiController extends AbstractController
 {
+
+    /**
+     * @Route("/api", name="api")
+     */
+    public function apiAction()
+    {
+        return $this->render('api/index.html.twig');
+    }
     /**
      * @Route("/api/hub/{token}", name="api_hub")
      */
