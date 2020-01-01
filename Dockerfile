@@ -9,8 +9,6 @@ WORKDIR /home
 RUN git clone https://github.com/Mediashare/Toaster Toaster
 WORKDIR /home/Toaster
 RUN composer install
-RUN chmod -R 777 var
 RUN bin/console doctrine:database:create
 RUN bin/console doctrine:schema:update --force
-RUN bin/console server:start
 EXPOSE 80 443
