@@ -77,6 +77,10 @@ class User implements UserInterface
      */
     private $token;
 
+    public function __toString() {
+        return $this->getUsername();
+    }
+
     public function __construct()
     {
         $this->setToken(uniqid());
