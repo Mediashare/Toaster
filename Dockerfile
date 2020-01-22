@@ -5,12 +5,11 @@ RUN apt install -y php7.3 php-xml php-curl php-ctype php-tokenizer php-sqlite3 p
 RUN apt install -y php-simplexml
 RUN apt install -y apache2 sqlite
 RUN apt install -y composer git
-RUN apt install -y symfony
 WORKDIR /home
 RUN git clone https://github.com/Mediashare/Toaster Toaster
 WORKDIR /home/Toaster
 RUN composer install
 RUN bin/console doctrine:database:create
 RUN bin/console doctrine:schema:update --force
-RUN symfony:server start --port=8080
 EXPOSE 8080
+CMD [ "bin/console", "server:run", "0.0.0.0:8080" ] 
