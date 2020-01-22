@@ -4,27 +4,33 @@ Toaster is a social network about file sharing. It works with a hub system that 
 The project aims to become a decentralized service, giving the possibility to create Toaster instances on your server while keeping the possibility to link to other connected instances.
 
 ## Installation
+### Docker
+```bash
+docker pull slote/toaster
+docker run -d -p 8080:8080 slote/toaster
+```
+### Manuel
 ```bash
 git clone https://github.com/Mediashare/Toaster
 cd Toaster
 composer install
 ```
-### Database (Sqlite)
+#### Database (Sqlite)
 ```bash
 bin/console doctrine:database:create
 bin/console doctrine:schema:update --force
 ```
-### .env
+#### .env
 ```bash
 composer dump-env prod
 ```
-### php.ini
+#### php.ini
 ```ini
 post_max_size = 10000M
 upload_max_filesize = 10000M
 max_file_uploads = 10000
 ```
-### Apache config
+#### Apache config
 ```apache
 <VirtualHost *:80>
     ServerName toaster.bio
