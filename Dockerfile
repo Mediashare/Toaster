@@ -11,4 +11,5 @@ WORKDIR /home/Toaster
 RUN composer install
 RUN bin/console doctrine:database:create
 RUN bin/console doctrine:schema:update --force
-EXPOSE 80 443
+RUN symfony:server start --port=8080
+EXPOSE 8080
