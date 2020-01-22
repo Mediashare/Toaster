@@ -3,9 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\File;
+use App\Entity\Hub;
 use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method File|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +20,35 @@ class FileRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, File::class);
+    }
+
+    /**
+     * @return File[] Returns an array of Tag objects
+     */
+    public function findByPage(Hub $hub, int $page, int $max)
+    {
+        $query = $this->createQueryBuilder('f')
+            ->where(':hub = f.hub')
+            ->setParameter('hub', $hub)
+            ->orderBy('f.updateDate', 'DESC')
+            ->getQuery()
+            // ->getResult()
+        ;
+
+        $results = $this->paginate($query, $page, $max);
+
+        return $results;
+    }
+
+    public function paginate($query, $page = 1, $limit = 2)
+    {
+        $paginator = new Paginator($query);
+
+        $paginator->getQuery()
+            ->setFirstResult($limit * ($page - 1)) // Offset
+            ->setMaxResults($limit); // Limit
+
+        return $paginator;
     }
 
     /**

@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class HubController extends AbstractController
 {
@@ -27,17 +28,21 @@ class HubController extends AbstractController
     }
 
     /**
-     * @Route("/show/hub/{token}", name="hub_show")
+     * @Route("/show/hub/{token}/{page}", name="hub_show")
      */
-    public function show(string $token)
+    public function show(string $token, int $page = 1)
     {
         $em = $this->getDoctrine()->getManager();
         $hub = $em->getRepository(Hub::class)->findOneBy(['token' => $token], ['updateDate' => 'DESC']);
-        $files = $em->getRepository(File::class)->findBy(['hub' => $hub], ['updateDate' => 'DESC']);
+        $files = $em->getRepository(File::class)->findByPage($hub, $page, $max = 25);
+        $pagination = ceil(count($em->getRepository(File::class)->findBy(['hub' => $hub])) / $max);
         
         return $this->render('hub/show.html.twig', [
             'hub' => $hub,
-            'files' => $files
+            'files' => $files,
+            'pagination' => $pagination,
+            'page' => $page,
+            'max' => $max
         ]);
     }
 

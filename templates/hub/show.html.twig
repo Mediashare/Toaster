@@ -30,7 +30,8 @@
             {% endif %}
         </div>
         <div class="six wide column">
-            <div class="ui sticky sticky_page" style="padding-top: 4rem;">
+            <div class="ui sticky sticky_page">
+            {% include "hub/_pagination.html.twig" %}
                 {% if hub.description %}
                     <h3 class="ui dividing header">
                         Description
