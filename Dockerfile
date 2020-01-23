@@ -12,4 +12,7 @@ RUN composer install
 RUN bin/console doctrine:database:create
 RUN bin/console doctrine:schema:update --force
 EXPOSE 8080
+RUN sed -i '/^ *post_max_size/s/=.*/= 10000M/' /etc/php/7.3/cli/php.ini
+RUN sed -i '/^ *upload_max_filesize/s/=.*/= 10000M/' /etc/php/7.3/cli/php.ini
+RUN sed -i '/^ *max_file_uploads/s/=.*/= 10000/' /etc/php/7.3/cli/php.ini
 CMD [ "bin/console", "server:run", "0.0.0.0:8080" ] 
