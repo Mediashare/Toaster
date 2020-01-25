@@ -31,8 +31,30 @@ class SearchController extends AbstractController
         if (!$query):
             $query = $request->get('query');
         endif;
-        $query = \strtolower($query);
 
+        $query = \strtolower($query);
+        $queries = explode(" ", $query);
+        foreach ($queries as $query) {
+            if (!empty($query)):
+                if (empty($data)): // Request to Database
+                    $data = $this->results($query);
+                else: // Search in Database results
+                    foreach ($data['results'] as $type) {
+                        foreach ($type['results'] as $index => $result) {
+                            if (\strpos(\strtolower($result['title']), $query) === false):
+                                unset($data['results'][$type['name']]['results'][$index]);
+                            endif;
+                        }
+                        $data['results'][$type['name']]['results'] = array_values($data['results'][$type['name']]['results']);
+                    }
+                endif;
+            endif;
+        }
+        
+        return new JsonResponse($data, 200);
+    }
+
+    private function results(string $query): array {
         $data['results'] = [];
         $em = $this->getDoctrine()->getManager();
         $hubs = $em->getRepository(Hub::class)->findBy([], ['updateDate' => 'DESC']);
@@ -76,14 +98,16 @@ class SearchController extends AbstractController
                 }
             }
         }
-        foreach ($tags as $tag) {
-            $data['results']['Tags']['name'] = 'Tags';
-            $data['results']['Tags']['results'][] = [
-                'name' => 'Tags',
-                'title' => '#'.$tag->getName(),
-                'url' => $this->generateUrl('tag_show', ['slug' => $tag->getSlug()]),
-            ];
-        }
-        return new JsonResponse($data, 200);
+        if (!empty($tags)):
+            foreach ($tags as $tag) {
+                $data['results']['Tags']['name'] = 'Tags';
+                $data['results']['Tags']['results'][] = [
+                    'name' => 'Tags',
+                    'title' => '#'.$tag->getName(),
+                    'url' => $this->generateUrl('tag_show', ['slug' => $tag->getSlug()]),
+                ];
+            }
+        endif;
+        return $data;
     }
 }
