@@ -7,7 +7,7 @@
                 position: 'bottom right',
             });
         </script>
-        <input id="clipboard_input-{{ hub.token }}" type="text" value="{{ url('hub_show', {'token': hub.token}) }}" class="ui button" style="width: 90%;">
+        <input id="clipboard_input-{{ hub.token }}" type="text" value="{{ url('hub_show', {'token': hub.token, 'page': page}) }}" class="ui button" style="width: 90%;">
         <div class="ui teal right icon button">
             <i class="copy icon"></i>
         </div>

@@ -7,7 +7,7 @@
                 alt="{{ file.tags|join(' ') }}"
                 style="background-color: #ebf4ff;">
         </a>
-    {% elseif 'application/' in file.metadata.mimeType or 'text/' in file.metadata.mimeType %}
+    {% elseif 'text/' in file.metadata.mimeType %}
         {# if file size < 1Mb #}
         {% if file.size(false, stockage) < 1000000 %} 
             <textarea id="code" name="code">{{ file.content(stockage) }}</textarea>

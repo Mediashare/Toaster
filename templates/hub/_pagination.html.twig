@@ -1,6 +1,6 @@
 <div class="w-100" style="overflow: overlay;">
     <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-        {% if page != 1 %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page + 1}) }}" aria-current="false" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>{% endif %}
+        {% if page != 1 %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page - 1}) }}" aria-current="false" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>{% endif %}
         {% set currentPage = page %}
         {% for i in currentPage - 3..pagination %}
             {% if i > 0 and i < page + 4 %}
