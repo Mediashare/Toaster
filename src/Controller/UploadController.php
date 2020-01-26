@@ -58,6 +58,11 @@ class UploadController extends AbstractController
                         'status' => 'success',
                         'message' => 'File was uploaded.'
                     ];
+                else:
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'File was not submited.'
+                    ];
                 endif;
             else:
                 $response = [
