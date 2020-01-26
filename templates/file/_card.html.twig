@@ -34,10 +34,15 @@
             });
         </script>
     {% elseif 'video/' in file.metadata.mimeType %}
-        <video width="100%" height="auto" controls>
-            <source src="{{ path('file_download', {'token': file.token}) }}" type="video/mp4">
-            <source src="{{ path('file_download', {'token': file.token}) }}" type="video/ogg">
+        <video class="lozad-{{ file.token }}" width="100%" height="auto" controls>
+            <source data-src="{{ path('file_download', {'token': file.token}) }}" type="video/mp4">
         </video>
+        <script>
+            lazyLoad('{{ file.token }}')
+            $(window).scroll(function() {
+                lazyLoad('{{ file.token }}')
+            });
+        </script>
     {% elseif 'text/' in file.metadata.mimeType %}
         {% if file and file.size(false, stockage) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
