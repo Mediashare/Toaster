@@ -43,9 +43,11 @@
     // Form input hubs
     var hubs = new Array();
     {% for hub in hubs %}
+        var hub = "{{ hub.name }}";
+        hub = hub.replace(/&amp;/g, '&');
         hubs.push({
-            value: '{{ hub.name }}',
-            text: '{{ hub.name }}',
+            value: hub,
+            text: hub,
             selected: false
         });
     {% endfor %}
@@ -62,9 +64,11 @@
     // Form input tags
     var tags = new Array();
     {% for tag in tags %}
+        var tag = "{{ tag.name }}";
+        tag = tag.replace(/&amp;/g, '&');
         tags.push({
-            value: '{{ tag.name }}',
-            text: '{{ tag.name }}',
+            value: tag,
+            text: tag,
             selected: false
         });
     {% endfor %}
