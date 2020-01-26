@@ -1,50 +1,13 @@
-{% if app.user %}
-    <div class="ui grid">
-        <div class="height wide column">
-            <div class="ui segment">
-                <h2 class="ui header">
-                    <img class="ui image" src="{{ asset('images/logo.png') }}">
-                    <div class="content">
-                        Welcome in the Toaster
-                    </div>
-                    </h2>
-                <p>
-                    Toaster is a social network about file sharing. 
-                    It works with a hub system that segments the different shares. <br>
-                    All files uploaded to Toaster.bio are open-source, which means that the whole community can access/download them.
-                </p>
-            </div>
+<div class="ui segment">
+    <h2 class="ui header">
+        <img class="ui image" src="{{ asset('images/logo.png') }}">
+        <div class="content">
+            Welcome in the Toaster
         </div>
-        <div class="height wide column">
-            {% if app.user.apiKey %}
-                {% include "profile/_curl.html.twig" %}
-            {% else %}
-                <div class="ui segment">
-                    <h2 class="ui header">
-                        <img class="ui image" src="{{ asset('images/terminal.png') }}">
-                        <div class="content">
-                            Upload file using your terminal
-                        </div>
-                    </h2>
-                    <a class="ui primary button" href="{{ path('profile_api_key') }}">
-                        Generate Api Key
-                    </a>
-                </div>        
-            {% endif %}
-        </div>
-    </div>
-{% else %}
-    <div class="ui segment">
-        <h2 class="ui header">
-            <img class="ui image" src="{{ asset('images/logo.png') }}">
-            <div class="content">
-                Welcome in the Toaster
-            </div>
-            </h2>
-        <p>
-            Toaster is a social network about file sharing. 
-            It works with a hub system that segments the different shares. <br>
-            All files uploaded to Toaster.bio are open-source, which means that the whole community can access/download them.
-        </p>
-    </div>        
-{% endif %}
+        </h2>
+    <p>
+        Toaster is a social network about file sharing. 
+        It works with a hub system that segments the different shares. <br>
+        All files uploaded to Toaster.bio are open-source, which means that the whole community can access/download them.
+    </p>
+</div>

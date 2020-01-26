@@ -54,6 +54,23 @@
                         <i class="upload icon"></i>
                     </div>
                 </div>
+                <div class="extra content">
+                    {% if app.user.apiKey %}
+                        {% include "profile/_curl.html.twig" %}
+                    {% else %}
+                        <div class="ui segment">
+                            <h2 class="ui header">
+                                <img class="ui image" src="{{ asset('images/terminal.png') }}">
+                                <div class="content">
+                                    Upload file using your terminal
+                                </div>
+                            </h2>
+                            <a class="ui primary button" href="{{ path('profile_api_key') }}">
+                                Generate Api Key
+                            </a>
+                        </div>        
+                    {% endif %}
+                </div>
             </div>
         {% else %}
             <button onclick="$('#registration_form.ui.modal').modal('show');" class="item ui button">
