@@ -1,4 +1,5 @@
 <form id="file_submit" class="ui form field CodeMirror-debug" action="{{ path('upload_file') }}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="formulaire" required="true" value="true">
     <label for="files_input">Choose File(s)*</label>
     <div class="ui field input require">
         <input onchange="checkInputs();" id="files_input" type="file" name="files[]" multiple required="true">

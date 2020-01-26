@@ -57,7 +57,7 @@ class RegistrationController extends AbstractController
                 $roles = ['ROLE_USER'];
                 $user->setRoles($roles);
             endif;
-            
+
             $em->persist($user);
             $em->flush();
 

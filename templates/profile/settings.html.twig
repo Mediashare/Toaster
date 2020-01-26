@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ user.username }} | Profile - Settings{% endblock %}
+{% block og_title %}{{ user.username }} | Profile - Settings{% endblock %}
+{% block content %}
+
+<div id="page" class="ui grid">
+    <div class="three wide column">
+        {% include "profile/_menu.html.twig" %}
+    </div>
+    <div class="thirteen wide column">
+        <h2 class="ui dividing header">{{ user.username }} / Settings</h2>
+        <div class="ui card w-100">
+            <div class="content">
+                <label>Api Key:</label>
+                <div id="clipboard_div" class="ui action input w-100" onclick="copyToClipboard('clipboard_input');">
+                    <script>
+                        $('#clipboard_div').popup({
+                            content: "Copied!",
+                            on: 'click',
+                            position: 'bottom right',
+                        });
+                    </script>
+                    <input id="clipboard_input" type="text" value="{{ user.apiKey }}" class="ui button disable" style="width: 95%;">
+                    <div class="ui teal right icon button">
+                        <i class="copy icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                <a class="ui primary button" href="{{ path('profile_api_key') }}">
+                    Generate Api Key
+                </a>
+            </div>
+        </div>
+        {% include "profile/_curl.html.twig" %}
+    </div>
+</div>
+{% endblock %}

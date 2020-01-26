@@ -1,0 +1,16 @@
+<div class="ui segment">
+    <h2 class="ui header">
+        <img class="ui image" src="{{ asset('images/terminal.png') }}">
+        <div class="content">
+            Upload file using your terminal
+        </div>
+    </h2>
+<pre style="margin-top: 0px;">
+<code>curl --request POST \
+    --url https://toaster.bio/upload/file \
+    --header 'content-type: multipart/form-data;' \
+    -F 'api_key={{ app.user.apiKey }}' \
+    -F 'hubs=hub1,hub2' \
+    -F 'tags=tag1,tag2' \
+    -F 'files[]=@/path/to/file/img.png'</code></pre>
+</div>

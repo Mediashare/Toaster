@@ -4,10 +4,12 @@ namespace App\Controller;
 use App\Entity\Hub;
 use App\Entity\Tag;
 use App\Entity\File;
+use App\Entity\User;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -33,6 +35,48 @@ class UploadController extends AbstractController
      */
     public function upload(Request $request) {
         $this->em = $this->getDoctrine()->getManager();
+
+        // Check client type (browser/terminal)
+        if ($request->get('formulaire') === "true"): // Browser
+            if ($this->getUser()): // Check if User
+                $result = $this->process($request, $this->getUser());
+                if ($result):
+                    return $this->redirectToRoute('hub_show', ['token' => $result]);
+                endif;
+            endif;
+            // Return Error
+            $session = new Session();
+            $session->getFlashBag()->add('error', 'Upload form have problem.');
+            return $this->redirectToRoute('app');
+        else: // Terminal
+            $api_key = $request->get('api_key');
+            $user = $this->em->getRepository(User::class)->findOneBy(['apiKey' => $api_key]);
+            if ($user):
+                $result = $this->process($request, $user);
+                if ($result):
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'File was uploaded.'
+                    ];
+                endif;
+            else:
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Invalid api_key submited.'
+                ];
+            endif;
+            return new JsonResponse($response, 200);
+        endif;
+    }
+
+    /**
+     * Process for uploading file
+     *
+     * @param Request $request
+     * @param User $user
+     * @return bool
+     */
+    public function process(Request $request, User $user) {
         $files = (array) $request->files->get('files');
         if ($request->isMethod('POST') && $files && count($files) > 0) {
             $files_description = $request->request->get('files_description');
@@ -42,20 +86,19 @@ class UploadController extends AbstractController
             else:
                 $tags = [];
             endif;
-            $hubs = $this->getHubs($request->request->get('hubs'));
+            $hubs = $this->getHubs($request->request->get('hubs'), $user);
             foreach ($hubs as $hub) {
-                $tmp_files = $this->recordFiles($hub, $tags, $files);
+                $tmp_files = $this->recordFiles($hub, $tags, $files, $user);
             }
             // Remove tmp files
             foreach ($tmp_files as $tmp_file) {
                 $this->filesystem->remove($tmp_file['filepath']);
             }
-            return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
+            // Success
+            return $hub->getToken(); 
         }
-        
-        $session = new Session();
-        $session->getFlashBag()->add('error', 'Upload form have problem.');
-        return $this->redirectToRoute('app');
+        // Error
+        return false;
     }
 
     /**
@@ -81,7 +124,7 @@ class UploadController extends AbstractController
         return $files;
     } 
 
-    private function getHubs(string $hubs) {
+    private function getHubs(string $hubs, User $user) {
         // New Hub
         $hubs = (array) explode(',', $hubs);
         foreach ($hubs as $index => $name) {
@@ -90,9 +133,7 @@ class UploadController extends AbstractController
                 $hub = new Hub();
                 $hub->setName($name);
                 $hub->setPath();
-                if ($this->getUser()):
-                    $hub->setUser($this->getUser());
-                endif;
+                $hub->setUser($user);
             endif;
             $hub->setUpdateDate(new \DateTime());
             unset($hubs[$index]);
@@ -115,7 +156,7 @@ class UploadController extends AbstractController
         return $tags;
     }
 
-    private function recordFiles(Hub $hub, array $tags, array $files) {
+    private function recordFiles(Hub $hub, array $tags, array $files, User $user) {
         foreach ($files as $file_data) {
             // Set file data
             $file = new File();
@@ -129,9 +170,7 @@ class UploadController extends AbstractController
                 $file->addTag($tag);
             }
             // User
-            if ($this->getUser()):
-                $file->setUser($this->getUser());
-            endif;
+            $file->setUser($user);
 
             // Copy tmp file
             $filePath = $this->getParameter('stockage').'/'.$file->getPath();

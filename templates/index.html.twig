@@ -1,19 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <div class="ui segment">
-        <h2 class="ui header">
-            <img class="ui image" src="{{ asset('images/logo.png') }}">
-            <div class="content">
-              Welcome in the Toaster
-            </div>
-          </h2>
-        <p>
-            Toaster is a social network about file sharing. 
-            It works with a hub system that segments the different shares. <br>
-            All files uploaded to Toaster.bio are open-source, which means that the whole community can access/download them.
-        </p>
-    </div>
+    {% include "_info.html.twig" %}
     {% for hub in hubs %}
         <h2 class="ui dividing header">
             <a href="{{ path('hub_show', {'token': hub.token}) }}">

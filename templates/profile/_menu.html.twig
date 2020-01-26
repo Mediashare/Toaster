@@ -17,4 +17,9 @@
             <a href="{{ path('profile_likes', {'token': user.token, 'type': 'comment'}) }}" class="item">Comments</a>
         </div>
     </div>
+    {% if app.user == user %}
+        <a href="{{ path('profile_settings') }}" class="{% if app.request.get('_route') == 'profile_settings' %}active{% endif %} item">
+            Settings
+        </a>
+    {% endif %}
 </div>

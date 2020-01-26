@@ -7,11 +7,32 @@ use App\Entity\File;
 use App\Entity\Like;
 use App\Entity\User;
 use App\Entity\Comment;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProfileController extends AbstractController
 {
+    /**
+     * @Route("/profile/settings", name="profile_settings")
+     */
+    public function settings() {
+        return $this->render('profile/settings.html.twig', [
+            'user' => $this->getUser(),
+        ]);
+    }
+    /**
+     * @Route("/profile/api_key", name="profile_api_key")
+     */
+    public function api_key() {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $user->generateApiKey();
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('profile_settings');
+    }
+
     /**
      * @Route("/profile/{token}", name="profile")
      */

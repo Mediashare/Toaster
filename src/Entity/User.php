@@ -77,6 +77,11 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $apiKey;
+
     public function __toString() {
         return $this->getUsername();
     }
@@ -90,6 +95,9 @@ class User implements UserInterface
         $this->hubs = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        if (!$this->getApiKey()):
+            $this->generateApiKey();
+        endif;
     }
 
     public function getId(): ?int
@@ -343,6 +351,18 @@ class User implements UserInterface
     {
         $this->token = $token;
 
+        return $this;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function generateApiKey(): self
+    {
+        $key = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(32/strlen($x)) )),1,32);
+        $this->apiKey = $key;
         return $this;
     }
 }
