@@ -2,12 +2,13 @@
 {% block title %}Toaster | Tags{% endblock %}
 {% block og_title %}Toaster | Tags{% endblock %}
 {% block content %}
+    <h2 class="ui dividing header">
+        Tags
+    </h2>
     {% for tag in tags %}
-        <h2 class="ui dividing header">
-            <a href="{{ path('tag_show', {'slug': tag.slug}) }}">
-                #{{ tag.name }}
-            </a>
-        </h2>
-        {{ render(controller('App\\Controller\\TagController::getLastFiles', {'tag': tag})) }}
+        <a href="{{ path('tag_show', {'slug': tag.slug}) }}" class="ui image purple label item margin">
+            {{ tag.name }}
+            <div class="detail">{{ tag.files|length }}</div>
+        </a>
     {% endfor %}
 {% endblock %}
