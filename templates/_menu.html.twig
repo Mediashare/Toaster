@@ -14,10 +14,11 @@
             </div>
         {% endif %} #}
         {% if app.user %}
-            <div class="ui dropdown item {% if app.request.get('_route') starts with 'profile' %}active{% endif %}">
+            <div class="ui dropdown item">
                 <i class="user icon"></i> {{ app.user.username }} <i class="dropdown icon"></i>
                 <div class="menu">
-                    <a href="{{ path('profile') }}" class="item">Profile</a>
+                    <a href="{{ path('profile') }}" class="item {% if app.request.get('_route') == 'profile' %}active{% endif %}">Profile</a>
+                    <a href="{{ path('profile_settings') }}" class="item {% if app.request.get('_route') == 'profile_settings' %}active{% endif %}">Settings</a>
                     <a href="{{ path('app_logout') }}" class="item">
                         Logout
                     </a>
