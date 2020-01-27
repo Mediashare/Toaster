@@ -47,7 +47,7 @@
         {% if file and file.size(false, stockage) < 1000000 %}
             <div class="ui divider" style="margin: 0;"></div>
             <div class="CodeMirror_25vh">
-                <textarea id="file-{{ file.token }}">{{ file.content }}</textarea>
+                <textarea id="file-{{ file.token }}">{{ file.content(stockage) }}</textarea>
                 <script>
                     var file_editor = CodeMirror.fromTextArea(document.getElementById("file-{{ file.token }}"), {
                         mode: {
