@@ -1,12 +1,14 @@
-<div class="w-100" style="overflow: overlay;">
-    <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
-        {% if page != 1 %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page - 1}) }}" aria-current="false" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>{% endif %}
-        {% set currentPage = page %}
-        {% for i in currentPage - 3..pagination %}
-            {% if i > 0 and i < page + 4 %}
-                <a href="{{ path('hub_show', {'token': hub.token, 'page': i}) }}" aria-current="{% if page == i %}true{% else %}false{% endif %}" value="{{ i }}" type="pageItem" class="item {% if page == i %}active{% endif %}">{{ i }}</a>
-            {% endif %}
-        {% endfor %}
-        {% if page != pagination %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page + 1}) }}" aria-current="false" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>{% endif %}
+{% if pagination > 1 %}
+    <div class="w-100" style="overflow: overlay;">
+        <div aria-label="Pagination Navigation" role="navigation" class="ui pagination menu">
+            {% if page != 1 %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page - 1}) }}" aria-current="false" value="1" aria-label="Previous item" type="prevItem" class="item">⟨</a>{% endif %}
+            {% set currentPage = page %}
+            {% for i in currentPage - 3..pagination %}
+                {% if i > 0 and i < page + 4 %}
+                    <a href="{{ path('hub_show', {'token': hub.token, 'page': i}) }}" aria-current="{% if page == i %}true{% else %}false{% endif %}" value="{{ i }}" type="pageItem" class="item {% if page == i %}active{% endif %}">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page != pagination %}<a href="{{ path('hub_show', {'token': hub.token, 'page': page + 1}) }}" aria-current="false" value="2" aria-label="Next item" type="nextItem" class="item">⟩</a>{% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
