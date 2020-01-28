@@ -180,9 +180,13 @@ class UploadController extends AbstractController
             $filePath = $this->getParameter('stockage').'/'.$file->getPath();
             $this->filesystem->copy($file_data['filepath'], $filePath);
 
-            // Record file
-            $this->em->persist($file);
-            $this->em->flush();
+            // Check duplicata
+            $checksum = $file->setChecksum($this->getParameter('stockage'));
+            if ($checksum):
+                // Record file
+                $this->em->persist($file);
+                $this->em->flush();
+            endif;
         }
         return $files;
     }

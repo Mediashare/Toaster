@@ -183,6 +183,21 @@ class Hub
 
         return $this;
     }
+    
+    /**
+     * Test if checksum was already record in this Hub
+     *
+     * @param string $checksum
+     * @return bool
+     */
+    public function checksum(string $checksum) {
+        foreach ($this->getFiles() as $file) {
+            if ($checksum === $file->getChecksum()):
+                return true;
+            endif;
+        }
+        return false;
+    }
 
     public function getDescription(): ?string
     {

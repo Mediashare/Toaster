@@ -47,6 +47,11 @@ class File
     private $path;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $checksum;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -183,6 +188,23 @@ class File
     {
         $content = file_get_contents($stockage.'/'.$this->getPath());
         return $content;
+    }
+    
+    public function getChecksum(): ?string
+    {
+        return $this->checksum;
+    }
+
+    public function setChecksum(string $stockage)
+    {
+        $checksum = \md5_file($stockage.'/'.$this->getPath());
+        if (!$this->getHub()->checksum($checksum)):
+            $this->checksum = $checksum;
+            return $this;
+        else:
+            $this->remove($stockage);
+            return false;
+        endif;
     }
 
     public function remove(string $stockage) {
