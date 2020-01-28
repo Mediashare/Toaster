@@ -30,11 +30,6 @@ class Hub
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $path;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $createDate;
@@ -109,18 +104,6 @@ class Hub
         $name = trim($name);
         $this->name = $name;
         $this->setSlug($name);
-
-        return $this;
-    }
-
-    public function getPath(): ?string
-    {
-        return rtrim($this->path, '/');
-    }
-
-    public function setPath(): self
-    {
-        $this->path = $this->getSlug().'_'.$this->getToken();
 
         return $this;
     }
@@ -292,11 +275,5 @@ class Hub
         }
 
         return $this;
-    }
-
-    public function remove(string $stockage) {
-        $filesystem = new Filesystem();
-        $filesystem->remove($stockage.'/'.$this->getPath());
-        return true;
     }
 }

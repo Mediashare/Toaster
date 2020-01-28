@@ -84,34 +84,10 @@ class FileController extends AbstractController
             $file->removeLike($like);
         }
         
-        $hub = $file->getHub();
-        $hub->removeFile($file);
         $em->remove($file);
         $em->flush();
 
         return $this->redirectToRoute('hub_show', ['token' => $hub->getToken()]);
-    }
-
-
-    private function getHubs(string $hubs) {
-        // New Hub
-        $em = $this->getDoctrine()->getManager();
-        $hubs = (array) explode(',', $hubs);
-        foreach ($hubs as $index => $name) {
-            $hub = $em->getRepository(Hub::class)->findOneBy(['name' => $name], ['updateDate' => 'DESC']);
-            if (!$hub):
-                $hub = new Hub();
-                $hub->setName($name);
-                $hub->setPath($this->getParameter('stockage'));
-                if ($this->getUser()):
-                    $hub->setUser($this->getUser());
-                endif;
-            endif;
-            $hub->setUpdateDate(new \DateTime());
-            unset($hubs[$index]);
-            $hubs[] = $hub;
-        }
-        return $hubs;
     }
 
     private function getTags(string $tags) {

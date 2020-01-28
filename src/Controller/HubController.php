@@ -121,7 +121,6 @@ class HubController extends AbstractController
         endif;
 
         foreach ($hub->getFiles() as $file) {
-            $hub->removeFile($file);
             $em->remove($file);
             $em->flush();
         }

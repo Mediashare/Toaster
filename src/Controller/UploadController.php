@@ -136,7 +136,6 @@ class UploadController extends AbstractController
             if (!$hub):
                 $hub = new Hub();
                 $hub->setName($name);
-                $hub->setPath();
                 $hub->setUser($user);
             endif;
             $hub->setUpdateDate(new \DateTime());
@@ -176,10 +175,9 @@ class UploadController extends AbstractController
             // User
             $file->setUser($user);
 
-            // Copy tmp file
-            $filePath = $this->getParameter('stockage').'/'.$file->getPath();
-            $this->filesystem->copy($file_data['filepath'], $filePath);
-
+            // Send file to CloudFile API
+            $path = $file_data['filepath'];
+            
             // Record file
             $this->em->persist($file);
             $this->em->flush();

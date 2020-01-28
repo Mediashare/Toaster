@@ -44,8 +44,6 @@ class File
      */
     private $updateDate;
 
-    private $path;
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
@@ -153,42 +151,6 @@ class File
         $this->updateDate = $updateDate;
 
         return $this;
-    }
-
-    public function getPath(): ?string
-    {
-        $filepath = $this->getHub()->getPath() . '/';
-        $filepath .= $this->getToken() . '.';
-        $filepath .= $this->getMetadata()['extension'] ?? null;
-        return $filepath;
-    }
-
-    public function getSize(bool $converted = true, string $stockage): ?string
-    {
-        if (file_exists($stockage.'/'.$this->getPath())) {
-            $bytes = filesize($stockage.'/'.$this->getPath());
-            if ($converted === false):
-                return $bytes;
-            endif;
-            $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-            $factor = floor((strlen($bytes) - 1) / 3);
-            if ($factor > 3):$decimals = 2;else:$decimals = 0;endif;
-            return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$size[$factor];
-        } else {
-            return '0B';
-        }
-    }
-
-    public function getContent(string $stockage): ?string
-    {
-        $content = file_get_contents($stockage.'/'.$this->getPath());
-        return $content;
-    }
-
-    public function remove(string $stockage) {
-        $filesystem = new Filesystem();
-        $filesystem->remove($stockage.'/'.$this->getPath());
-        return true;
     }
 
     public function getDescription(): ?string
