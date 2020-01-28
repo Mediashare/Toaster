@@ -35,7 +35,6 @@ class UploadController extends AbstractController
      */
     public function upload(Request $request) {
         $this->em = $this->getDoctrine()->getManager();
-
         // Check client type (browser/terminal)
         if ($request->get('formulaire') === "true"): // Browser
             if ($this->getUser()): // Check if User
@@ -181,15 +180,10 @@ class UploadController extends AbstractController
             $filePath = $this->getParameter('stockage').'/'.$file->getPath();
             $this->filesystem->copy($file_data['filepath'], $filePath);
 
-            // Check duplicata
-            $checksum = $file->setChecksum($this->getParameter('stockage'));
-            if ($checksum):
-                // Record file
-                $this->em->persist($file);
-                $this->em->flush();
-            endif;
+            // Record file
+            $this->em->persist($file);
+            $this->em->flush();
         }
-
         return $files;
     }
 }
