@@ -26,6 +26,7 @@ class CloudfileMigrationCommand extends Command
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $this->output = $output;
         foreach ($this->em->getRepository(File::class)->findAll() as $file):
             $output->write($file->getFilename());
             if (empty($file->getMetadata()['cloudfile'])):
@@ -53,6 +54,7 @@ class CloudfileMigrationCommand extends Command
         $upload = $cloudfile->file()->upload($realFile, ['description' => $file->getMetadata()['description'], 'hub' => $file->getHub()->getName()]);
         \unlink($realFile);
         if ($upload['status'] === 'success'):
+            $this->output->whrite(' - Uploaded');
             return 'https://cloudfile.tech/public/5f801669a7704/'.$upload['files']['results'][0]['id'];
         else: return false; endif;
     }
@@ -62,6 +64,7 @@ class CloudfileMigrationCommand extends Command
         $duplicate = $cloudfile->file()->search('checksum='.$checksum);
         if ($duplicate['files']['counter'] != 0):
             $result = $duplicate['files']['results'][0];
+            $this->output->whrite(' - Verified');
             return 'https://cloudfile.tech/public/'.$result['volume']['id'].'/'.$result['file']['id'];
         else: return false; endif;
     }
