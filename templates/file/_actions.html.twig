@@ -16,7 +16,7 @@
 <div class="ui card w-100">
     <div class="content">
         <div class="ui three buttons">
-            <a href="{{ path('file_download', {'token': file.token}) }}"
+            <a href="{% if file.metadata.cloudfile is defined %}{{ file.metadata.cloudfile }}{% else %}{{ path('file_download', {'token': file.token}) }}{% endif %}"
                 class="right floated ui icon button basic">
                 <i class="download green icon"></i>
             </a>

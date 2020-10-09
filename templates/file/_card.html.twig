@@ -122,7 +122,7 @@
                 <a href="{{ path('file_show', {'token': file.token}) }}" class="right floated ui icon button basic">
                     <i class="eye blue icon"></i>
                 </a>
-                <a download href="{{ path('file_download', {'token': file.token}) }}" class="right floated ui icon button basic">
+                <a {% if file.metadata.cloudfile is defined %}href="{{ file.metadata.cloudfile }}"{% else %}download href="{{ path('file_download', {'token': file.token}) }}"{% endif %} class="right floated ui icon button basic">
                     <i class="download green icon"></i>
                 </a>
                 <a href="{{ path('file_show', {'token': file.token}) }}#comments"
