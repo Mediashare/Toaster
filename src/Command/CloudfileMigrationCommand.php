@@ -50,7 +50,7 @@ class CloudfileMigrationCommand extends Command
 
         \copy($this->stockage.'/'.$file->getPath(), $realFile = $this->stockage.'/'.$file->getFilename());
         $cloudfile = new CloudFile('https://api.cloudfile.tech', '1FizpPryGEb54URKYZetHSn90DAWl28O');
-        $upload = $cloudfile->file()->upload($realFile, ['description' => $file->getMetadata()['description']]);
+        $upload = $cloudfile->file()->upload($realFile, ['description' => $file->getMetadata()['description'], 'hub' => $file->getHub()->getName()]);
         \unlink($realFile);
         if ($upload['status'] === 'success'):
             return 'https://cloudfile.tech/public/5f801669a7704/'.$upload['files']['results'][0]['id'];
